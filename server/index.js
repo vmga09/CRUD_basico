@@ -18,7 +18,7 @@ app.set('port', port)
 require('./routes/personal.routes')(app);
 
 
-
+// Esto prueba
 
 //Iniciar servicio API por el puerto 3000
 app.listen(app.get('port'),(error)=>{
