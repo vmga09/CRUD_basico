@@ -1,0 +1,29 @@
+
+<div class="container">
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Cargo</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let personal of ListarPersonal">
+        <th>{{personal.id}}</th>
+        <td>{{personal.nombre}}</td>
+        <td>{{personal.cargo}}</td>
+        <td>{{personal.correo}}</td>
+        <td>
+            <button type="button" class="btn btn-primary">Editar</button>
+        </td>
+        <td>
+            <button (click)="eliminarPersonal(personal.id)" type="button" class="btn btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
