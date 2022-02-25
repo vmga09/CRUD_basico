@@ -55,17 +55,7 @@ export class InicioComponent implements OnInit {
 
   modificarPersonal(id:any){
     this.Router.navigate(['/edit/:id'])
-    /*  //this.PersonalService.modificarPersonal(id).subscribe(
-    this.PersonalService.modificarPersonal(id, personal).subscribe(
-      res=>{
-        this.refreshList();
-      },
-      err=>{
-        console.log(err);
-      }
-
-
-    ); */ 
+    
   }
   
 
