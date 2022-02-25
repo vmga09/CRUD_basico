@@ -20,11 +20,11 @@ export class PersonalService {
     return this.http.get<Personal[]>(URL+'/listarPersonal');
   }
 
-  /* getPersonalId(id:string)
+  getPersonalId(id:any): Observable<any>
   { 
-    return this.http.get(this.url+'/listarPersonalId/'+id);
+    return this.http.get(URL+`/listarPersonalId/${id}`);
   }
- */
+ 
   eliminarPersonal(id:any): Observable<any>
   { 
     return this.http.get(URL+`/eliminarPersonal/${id}`);
@@ -39,6 +39,8 @@ export class PersonalService {
   { 
     return this.http.put(URL+`/modificarPersonal/${id}`, personal);
   }
+
+
  
 
 
@@ -46,3 +48,5 @@ export class PersonalService {
 
 
 }
+
+

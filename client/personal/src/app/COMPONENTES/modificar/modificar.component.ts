@@ -23,7 +23,7 @@ export class ModificarComponent implements OnInit {
               private activeRoute:ActivatedRoute) { } 
 
   ngOnInit(): void {
-    const id_in = this.activeRoute.snapshot.params[0];
+    const id_in = this.activeRoute.snapshot.paramMap.get('id');
     console.log('Id de entrada'+id_in);
 
   }
