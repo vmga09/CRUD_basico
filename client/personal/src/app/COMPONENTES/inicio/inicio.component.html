@@ -18,7 +18,8 @@
         <td>{{personal.cargo}}</td>
         <td>{{personal.correo}}</td>
         <td>
-            <button  type="button" class="btn btn-primary">Editar</button>
+            <button  routerLink="/edit/{{personal.id}}" type="button" class="btn btn-primary">Editar</button>
+            <!-- <span routerLink="/edit/{{personal.id}}">Editar</span> -->
         </td>
         <td>
             <button (click)="eliminarPersonal(personal.id)" type="button" class="btn btn-danger">Eliminar</button>

@@ -29,4 +29,7 @@ export class AgregarComponent implements OnInit {
     this.router.navigate(['/inicio']);
   }
 
+
+
+
 }

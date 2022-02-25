@@ -35,9 +35,9 @@ export class PersonalService {
     return this.http.post(URL+'/agregarPersonal', personal);
   }
 
-   modificarPersonal(id:string,personal:any)
+   modificarPersonal(id:string,personal:any):Observable<any>
   { 
-    return this.http.put(URL+'/modificarPersonal/'+id, personal);
+    return this.http.put(URL+`/modificarPersonal/${id}`, personal);
   }
  
 

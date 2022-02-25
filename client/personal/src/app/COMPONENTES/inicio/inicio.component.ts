@@ -15,7 +15,7 @@ export class InicioComponent implements OnInit {
   currentUser: Personal = {};
   currentIndex= -1;
 
-  constructor(private PersonalService:PersonalService) { }
+  constructor(private PersonalService:PersonalService, private Router:Router) { }
 
   ngOnInit(): void {
     this.listarPersonal();
@@ -52,5 +52,21 @@ export class InicioComponent implements OnInit {
     );
   }
 
+
+  modificarPersonal(id:any){
+    this.Router.navigate(['/edit/:id'])
+    /*  //this.PersonalService.modificarPersonal(id).subscribe(
+    this.PersonalService.modificarPersonal(id, personal).subscribe(
+      res=>{
+        this.refreshList();
+      },
+      err=>{
+        console.log(err);
+      }
+
+
+    ); */ 
+  }
+  
 
 }
