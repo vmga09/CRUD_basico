@@ -2,22 +2,25 @@
     <p>AGREGAR PERSONAL</p>
     <div class="row">
         <div class="col-sm-6">
-            <form>
+            <form [formGroup] = "personalForm" (ngSubmit)="agregarPersonal()">
                 <div class="mb-3">
                     <label class="form-label">Nombre de Personal</label>
-                    <input [(ngModel)]="personal.nombre" type="text" class="form-control" name="nombre">
-                    <div class="text-danger"> <span>El nombre del personal es <strong>obligatorio</strong></span></div>
-
+                    <input formControlName="nombre1" [(ngModel)]="personal.nombre" type="text" class="form-control form-control-lg" name="nombre" placeholder="Nombre">
+                    <div class="text-danger" *ngIf="personalForm.get('nombre1')?.hasError('required') && personalForm.get('nombre1')?.touched"><span>El nombre del personal es <strong>obligatorio</strong></span></div>
+                    
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Cargo de Personal</label>
-                    <input [(ngModel)]="personal.cargo" type="text" class="form-control" name="cargo">
+                    <input formControlName="cargo1" [(ngModel)]="personal.cargo" type="text" class="form-control" name="cargo" placeholder="Cargo" >
+                    <div class="text-danger" *ngIf="personalForm.get('cargo1')?.hasError('required')&& personalForm.get('cargo1')?.touched" >
+                        <span>El cargo del personal es <strong>obligatorio</strong></span></div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Correo de Personal</label>
-                    <input [(ngModel)]="personal.correo" type="text" class="form-control" name="correo">
+                    <input formControlName="correo1" [(ngModel)]="personal.correo" type="email" class="form-control" name="correo" placeholder="Correo" email="true">
+                    <div class="text-danger" *ngIf="personalForm.get('correo1')?.hasError('required')&& personalForm.get('correo1')?.touched"> <span>El correo del personal es <strong>obligatorio</strong></span></div>
                 </div>
-                <button (click)="agregarPersonal()" class="btn btn-primary">Agregar</button>
+                <button   type="submit"   (click)="agregarPersonal()" class="btn btn-primary" [disabled]="personalForm.invalid">Agregar</button>
             </form>
         </div>
        
