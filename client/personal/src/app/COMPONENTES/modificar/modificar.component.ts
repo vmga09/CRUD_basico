@@ -3,13 +3,14 @@ import { PersonalService } from 'src/app/SERVICE/personal.service';
 import { Router, ActivatedRoute } from '@angular/router'
 import { Personal } from 'src/app/MODELS/personal/personal.module';
 import { ThisReceiver } from '@angular/compiler';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-modificar',
   templateUrl: './modificar.component.html',
   styleUrls: ['./modificar.component.css']
 })
 export class ModificarComponent implements OnInit {
-  
+  personalFormMod: FormGroup;
   personal: Personal={
     id:'',
     nombre:'',
@@ -21,7 +22,14 @@ export class ModificarComponent implements OnInit {
   //id: any;
   constructor(private PersonalService:PersonalService,
               private router:Router,
-              private activeRoute:ActivatedRoute) { } 
+              private activeRoute:ActivatedRoute,
+              private fb: FormBuilder) {
+                this.personalFormMod = this.fb.group({
+                  nombre1: ['',Validators.required],
+                  cargo1: ['',Validators.required],
+                  correo1: ['',Validators.required]
+                })
+               } 
 
   ngOnInit(): void {
     const id_in = this.activeRoute.snapshot.paramMap.get('id');
@@ -46,6 +54,7 @@ export class ModificarComponent implements OnInit {
      this.PersonalService.modificarPersonal(this.personal.id,this.personal).subscribe(
        res=>{
          console.log(res);
+         console.log(this.personalFormMod);
        },
        err=>{
          console.log(err)

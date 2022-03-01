@@ -2,20 +2,24 @@
     <p>MODDIFICAR PERSONAL</p>
     <div class="row">
         <div class="col-sm-6">
-            <form>
+            <form [formGroup] = "personalFormMod" (ngSubmit)="modificarPersonal()">
                 <div class="mb-3">
                     <label class="form-label">Nombre de Personal</label>
-                    <input [(ngModel)]="personal.nombre" type="text" class="form-control" name="nombre">
+                    <input formControlName="nombre1" [(ngModel)]="personal.nombre" type="text" class="form-control" name="nombre">
+                    <div class="text-danger" *ngIf="personalFormMod.get('nombre1')?.hasError('required') && personalFormMod.get('nombre1')?.touched"><span>El nombre del personal es <strong>obligatorio</strong></span></div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Cargo de Personal</label>
-                    <input [(ngModel)]="personal.cargo" type="text" class="form-control" name="cargo">
+                    <input formControlName="cargo1" [(ngModel)]="personal.cargo" type="text" class="form-control" name="cargo">
+                    <div class="text-danger" *ngIf="personalFormMod.get('cargo1')?.hasError('required')&& personalFormMod.get('cargo1')?.touched" >
+                        <span>El cargo del personal es <strong>obligatorio</strong></span></div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Correo de Personal</label>
-                    <input [(ngModel)]="personal.correo" type="text" class="form-control" name="correo">
+                    <input formControlName="correo1" [(ngModel)]="personal.correo" type="email" class="form-control" name="correo" email="true">
+                    <div class="text-danger" *ngIf="personalFormMod.get('correo1')?.hasError('required')&& personalFormMod.get('correo1')?.touched"> <span>El correo del personal es <strong>obligatorio</strong></span></div>
                 </div>
-                <button (click)="modificarPersonal()" class="btn btn-primary">Guardar</button>
+                <button (click)="modificarPersonal()" class="btn btn-primary" [disabled]="personalFormMod.invalid">Guardar</button>
             </form>
         </div>
        
