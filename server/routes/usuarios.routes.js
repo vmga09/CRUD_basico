@@ -1,12 +1,31 @@
-const express = require('express');
+const rutas = require('express').Router();
+const controller =require('../controllers/auth');
+
+module.exports = function (app){
+
+    app.get('/api/listarUsuarios', controller.listarUsuarios);
+    app.post('/api/signIn', controller.signIn);
+    app.post('/api/consultarUsuario', controller.consultarUsuario);
+
+}
+
+
+
+
+
+
+
+
+
+/* const express = require('express');
 
 const { body } = require('express-validator');
 
 const router = express.Router();
 
-const User = require('../models/usuarios.modeles');
+const User = require('../models/usuarios.models');
 
-const authController = require('../controllers/auth');
+const authController = require('../controllers/usuario.controllers');
 
 router.post(
   '/signup',
@@ -29,4 +48,4 @@ router.post(
 
 router.post('/login', authController.login);
 
-module.exports = router;
+module.exports = router; */

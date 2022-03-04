@@ -24,6 +24,7 @@ app.set('port', port)
 
 //Llama a rutas
 require('./routes/personal.routes')(app);
+require('./routes/usuarios.routes')(app);
 
 
 
