@@ -66,12 +66,14 @@ exports.login = async (req,res) =>{
                         const token  = jwt.sign({id:id},process.env.JWT_SECRETO,{
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
-                        console.log(token)
+                        //console.log(token)
                         const cookieOptions = {
                             expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES * 24 * 60 *60 *100),
                             httpOnly:true
                         }
-                        res.cookie('jwt')
+                        res.cookie('jwt',token,cookieOptions)
+                        res.send('jwt',token,cookieOptions)
+                        
                     } 
                 })
                 

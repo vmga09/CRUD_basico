@@ -2,8 +2,9 @@
 //Llama librería express
 const express = require('express');
 const dotenv = require('dotenv');
-
+const cookieParser = require('cookie-parser')
 dotenv.config({path:'./env/.env'});
+
 //Define constante de puerto
 const port = (process.env.port || 3000);
 
@@ -17,8 +18,11 @@ var corsOptions = {
 //Express
 const app = express();
 
+
+
 //Admite formato json para body
 app.use(express.json())
+app.use(cookieParser())
 
 app.use(cors(corsOptions));
 
