@@ -7,18 +7,9 @@ const conexion = require('../config/conexion');
 const User = require('../models/auth.modeles');
 const bcryptjs = require('bcryptjs');
 const { getDefaultFlags } = require('mysql/lib/ConnectionConfig');
+const {promisify} = require('util')
 
-// exports.register = async (req,res) =>{
-//     const username = req.body.username;
-//     const email = req.body.email;
-//     const password = req.body.password;
-//     let passHash = await bcryptjs.hash(password,8)
-//     const role_id = req.body.role_id;
-//     User.register(username,email,passHash,role_id,function(data){
-//         res.send(data)
-//     })
 
-// }
 
 exports.validarusuario = async(req,res)=>{
     const username = req.body.username;
@@ -30,11 +21,13 @@ exports.validarusuario = async(req,res)=>{
     User.finduser(username,email,function(data){
         
         if(data!=undefined){
-            res.send('usuario ya existe')
+            //res.send('usuario ya existe')
+            res.redirect('/register')
         }
         else {
             User.register(username,email,passHash,role_id,function(resp){
-                res.send(resp)
+                //res.send(resp)
+                res.redirect('/inicio')
             })
             
            
@@ -72,21 +65,44 @@ exports.login = async (req,res) =>{
                             httpOnly:true
                         }
                         res.cookie('jwt',token,cookieOptions)
-                        res.send('jwt',token,cookieOptions)
+                        res.redirect('/')
+                        
                         
                     } 
+
+                    
                 })
                 
               }
          }catch (err) {
 
          }
-         
 
-    //     let passHash = await bcryptjs.hash(password,8)
-    //     const role_id = req.body.role_id;
-    //     User.register(username,email,passHash,role_id,function(data){
-    //         res.send(data)
-    //     })
     
+     }
+
+
+     exports.isAuthenticated = async (req,res,next)=>{
+         if(req.cookies.jwt){
+             try {
+                 const decodificada = await jwt.verify(req.cookies.jwt, process.env.JWT_SECRETO)
+                 conexion.query('SELECT * FROM users id = ?',[decodificada.id],(error, results)=>{
+                     if(!results){return next()}
+                     req.username = results[0]
+                     console.log(results[0])
+                     return next()
+                 })
+             } catch (error) {
+                 console.log(error)
+                 return next()
+                 
+             }
+         }else{
+             res.redirect('/inicio')
+         }
+     }
+
+     exports.logout = (req,res) =>{
+         res.clearCookie('jwt')
+         return res.redirect('/')
      }
