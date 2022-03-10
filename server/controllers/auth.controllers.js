@@ -83,8 +83,8 @@ exports.login = async (req,res) =>{
                         res.cookie('jwt',token,cookieOptions)
                         res.render('login',{
                             alert:true,
-                            alertTitle: "ErrorConexion Exitosa",
-                            alerMessage:"Login correcto!",
+                            alertTitle: "Conexion Exitosa",
+                            alertMessage:"Login correcto!",
                             alertIcon:'success',
                             showConfirmButton: false,
                             timer: 800,
@@ -94,7 +94,7 @@ exports.login = async (req,res) =>{
 
 
 
-                        res.redirect('/')
+                        //res.redirect('/')
                         
                         
                     } 
