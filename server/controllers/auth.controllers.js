@@ -44,14 +44,30 @@ exports.login = async (req,res) =>{
             const password = req.body.password;
             
               if(!username || !password){
-                  res.send('ingrese un valido de usuario o password')
+                  res.render('login',{
+                      alert:true,
+                      alertTitle: "Advertencia",
+                      alertMessage:"Ingrese un usuario y password",
+                      alertIcon:'info',
+                      showConfirmButton: true,
+                      timer: false,
+                      ruta:'inicio'
+                  })
               }
               else {
                 conexion.query('select * from users where username=?',
                 [username],
                 async (error,results)=>{
                     if(results.length ==0 || ! (await bcryptjs.compare(password, results[0].password))){
-                        res.send('usuario no encontrado o password incorrecta')
+                        res.render('login',{
+                            alert:true,
+                            alertTitle: "Error",
+                            alertMessage:"Usuario y/o password incorrectos",
+                            alertIcon:'error',
+                            showConfirmButton: true,
+                            timer: false,
+                            ruta:'inicio'
+                        })
                     }
                     else{
                         //res.send('usuario correcto')
@@ -65,6 +81,19 @@ exports.login = async (req,res) =>{
                             httpOnly:true
                         }
                         res.cookie('jwt',token,cookieOptions)
+                        res.render('login',{
+                            alert:true,
+                            alertTitle: "ErrorConexion Exitosa",
+                            alerMessage:"Login correcto!",
+                            alertIcon:'success',
+                            showConfirmButton: false,
+                            timer: 800,
+                            ruta:'/'
+                        })
+
+
+
+
                         res.redirect('/')
                         
                         
@@ -89,7 +118,6 @@ exports.login = async (req,res) =>{
                  conexion.query('SELECT * FROM users id = ?',[decodificada.id],(error, results)=>{
                      if(!results){return next()}
                      req.username = results[0]
-                     console.log(results[0])
                      return next()
                  })
              } catch (error) {

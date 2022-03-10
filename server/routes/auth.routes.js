@@ -12,7 +12,7 @@ router.get('/',authController.isAuthenticated,(req,res)=>{
 })
 
 router.get('/inicio',(req,res)=>{
-    res.render('login')
+    res.render('login',{alert:false})
 })
 
 router.get('/register',(req,res)=>{
@@ -22,7 +22,7 @@ router.get('/register',(req,res)=>{
 
 //router.post('/api/register',authController.register)
 router.post('/api/finduser',authController.validarusuario)
-router.post('/api/login',authController.login)
+router.post('/login',authController.login)
 router.get('/logout',authController.logout)
 
 module.exports = router
