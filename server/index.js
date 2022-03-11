@@ -4,6 +4,10 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
 dotenv.config({path:'./env/.env'});
+const session = require('express-session')
+
+
+
 
 //Define constante de puerto
 const port = (process.env.port || 3000);
@@ -17,7 +21,13 @@ var corsOptions = {
 
 //Express
 const app = express();
-
+app.use(session({
+    secret: 'secreto',
+    resave: false,
+    saveUninitialized: false,
+   // cookie: { secure: true }
+   cookie: {maxAge: 24*60*60*1000}
+  }))
 
 
 //Admite formato json para body
@@ -29,7 +39,6 @@ app.use(cors(corsOptions));
 app.set('view engine','ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
-
 
 
 

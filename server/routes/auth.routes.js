@@ -4,6 +4,7 @@ const router = express.Router();
 const { body } = require('express-validator');
 const User = require('../models/auth.modeles');
 const res = require('express/lib/response');
+const personalcontroller = require('../controllers/personal.controllers ')
 
 // Rutas para las vistas
 
@@ -15,14 +16,19 @@ router.get('/inicio',(req,res)=>{
     res.render('login',{alert:false})
 })
 
-router.get('/register',(req,res)=>{
+router.get('/register',authController.isAuthorizedAdmin,(req,res)=>{
     res.render('register')
+})
+
+router.get('/agregarpersonal',authController.isAuthorizedAdmin,(req,res)=>{
+    res.render('agregarpersonal')
 })
 
 
 //router.post('/api/register',authController.register)
-router.post('/api/finduser',authController.validarusuario)
+router.post('/finduser',authController.validarusuario)
 router.post('/login',authController.login)
 router.get('/logout',authController.logout)
+router.post('/agregarpersonal',personalcontroller.agregarPersonal)
 
 module.exports = router

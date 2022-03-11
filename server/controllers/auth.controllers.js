@@ -7,7 +7,10 @@ const conexion = require('../config/conexion');
 const User = require('../models/auth.modeles');
 const bcryptjs = require('bcryptjs');
 const { getDefaultFlags } = require('mysql/lib/ConnectionConfig');
-const {promisify} = require('util')
+const {promisify} = require('util');
+const { append } = require('express/lib/response');
+const { NULL } = require('mysql/lib/protocol/constants/types');
+
 
 
 
@@ -27,7 +30,7 @@ exports.validarusuario = async(req,res)=>{
         else {
             User.register(username,email,passHash,role_id,function(resp){
                 //res.send(resp)
-                res.redirect('/inicio')
+                res.redirect('/')
             })
             
            
@@ -80,6 +83,10 @@ exports.login = async (req,res) =>{
                             expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES * 24 * 60 *60 *100),
                             httpOnly:true
                         }
+                        req.session.role = results[0].role_id
+                        
+                        console.log(results[0].role_id)
+                        console.log(req.session.role)
                         res.cookie('jwt',token,cookieOptions)
                         res.render('login',{
                             alert:true,
@@ -115,10 +122,13 @@ exports.login = async (req,res) =>{
          if(req.cookies.jwt){
              try {
                  const decodificada = await jwt.verify(req.cookies.jwt, process.env.JWT_SECRETO)
+                 //console.log(decodificada.id)
                  conexion.query('SELECT * FROM users id = ?',[decodificada.id],(error, results)=>{
                      if(!results){return next()}
                      req.username = results[0]
+                   
                      return next()
+                     
                  })
              } catch (error) {
                  console.log(error)
@@ -126,11 +136,39 @@ exports.login = async (req,res) =>{
                  
              }
          }else{
+          
              res.redirect('/inicio')
          }
      }
 
+    exports.isAuthorizedAdmin = async (req,res,next)=>{
+        
+        const role = req.session.role
+      
+        try {
+            
+                if(role == 'admin'){
+                  
+                    return next()
+                }
+                else 
+                    
+                    res.redirect('/')
+                    
+        } catch (error) {
+            console.log(error)
+            
+               return next()
+            
+        }
+
+    }
+
+
+
      exports.logout = (req,res) =>{
          res.clearCookie('jwt')
+         res.clearCookie('connect.sid')
+         
          return res.redirect('/')
      }

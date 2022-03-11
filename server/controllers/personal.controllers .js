@@ -22,7 +22,8 @@ const myModel=require('../models/personal.models');
         var correo = req.body.correo;
         myModel.agregarPersonal(nombre,cargo,correo,function(data){
              //res.send(nombre,cargo,correo)
-             res.send(data)
+             //res.send(data)
+             res.redirect('/')
         })
      }, 
     

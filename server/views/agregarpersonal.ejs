@@ -30,31 +30,25 @@
         <div class="row">
             <div class="col-lg-12 shadow-lg p-3 mb-5">
                 <div class="card border-primary">
-                    <div class="card-header bg-primary text-white">Registrar</div>
+                    <div class="card-header bg-primary text-white">Ingresar personal</div>
                     <div class="card-body text-primary">
-                        <form action="/finduser" method="POST">
+                        <form action="/agregarPersonal" method="POST">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Ingrese username</label>
-                                <input id="username" name="username" type="text" class="form-control" aria-describedby="emailHelp"> 
+                                <label for="nombre" class="form-label">Ingrese Nombre</label>
+                                <input id="nombre" name="nombre" type="text" class="form-control" aria-describedby="emailHelp"> 
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Ingrese email</label>
-                                <input id="email" name="email" type="email" class="form-control" > 
+                                <label for="cargo" class="form-label">Ingrese Cargo</label>
+                                <input id="cargo" name="cargo" type="text" class="form-control" > 
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Ingrese password</label>
-                                <input id="password" name="password" type="password" class="form-control" > 
+                                <label for="correo" class="form-label">Ingrese Correo</label>
+                                <input id="correo" name="correo" type="email" class="form-control" > 
                             </div>
-                            <div class="mb-3">
-                                <label for="role_id" class="form-label">Ingrese Rol</label>
-                                <input id="role_id" name="role_id" type="text" class="form-control" > 
-                            </div>
-
-
                             <div>
                                 <div class="card-footer bg-transparent border-primary">
                                     <a href="/" type="button" class="btn btn-secondary">Cancelar</a>
-                                     <button type="submit" class="btn btn-primary" href="/inicio" >Registrar</button>
+                                     <button type="submit" class="btn btn-primary" href="/" >Registrar</button>
                                 </div>
                             </div>
                         </form>
