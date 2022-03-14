@@ -13,7 +13,9 @@ const myModel=require('../models/personal.models');
     listarPersonalId:function(req,res){
         var id = req.params.id;
          myModel.listarPersonalId(id,function(data){
-             res.send(data)
+            res.render('modificarpersonal',{ personal:data })
+            //console.log(data)
+            //res.redirect('modificarpersonal')
              
         })
      },
@@ -44,6 +46,7 @@ const myModel=require('../models/personal.models');
       var cargo = req.body.cargo;
       var correo = req.body.correo;
       myModel.modificarPersonal(id,nombre,cargo,correo,function(data){
+           
            res.send(data)
       })
    } 

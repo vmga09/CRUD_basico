@@ -136,7 +136,7 @@ exports.login = async (req,res) =>{
                  
              }
          }else{
-          
+             
              res.redirect('/inicio')
          }
      }
@@ -152,8 +152,25 @@ exports.login = async (req,res) =>{
                     return next()
                 }
                 else 
+                {
                     
+                /* res.render('index',{
+                    alert:true,
+                    alertTitle: "Error",
+                    alertMessage:"No esta autorizado para ejecutar esta acción",
+                    alertIcon:'error',
+                    showConfirmButton: false,
+                    timer: 800,
+                    ruta:'/'
+
+
+                    }) */
+                    
+
+
+
                     res.redirect('/')
+                }
                     
         } catch (error) {
             console.log(error)

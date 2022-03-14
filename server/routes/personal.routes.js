@@ -10,10 +10,10 @@ const controller =require('../controllers/personal.controllers ');
 module.exports = function (app){
 
     //app.get('/api/listarPersonal', controller.listarPersonal);  // API Oculta
-    app.get('/api/listarPersonalId/:id', controller.listarPersonalId);
+    //app.get('/api/listarPersonalId/:id', controller.listarPersonalId);
     app.post('/api/agregarPersonal', controller.agregarPersonal);
     app.get('/api/eliminarPersonal/:id', controller.eliminarPersonalId);
-    app.put('/api/modificarPersonal/:id',controller.modificarPersonal);
+    app.put('/api/modificarPersonal',controller.modificarPersonal);
 
 }
 

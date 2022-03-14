@@ -27,6 +27,17 @@ router.get('/agregarpersonal',authController.isAuthorizedAdmin,(req,res)=>{
 
 
 
+router.get('/modificarpersonal',(req,res)=>{
+        res.render('modificarpersonal')
+    })
+
+//router.get('/listarPersonalId/:id',authController.isAuthorizedAdmin,(req,res)=>{
+//        res.render('modificarpersonal')
+//    })
+
+
+
+
 
 //router.post('/api/register',authController.register)
 router.post('/finduser',authController.validarusuario)
@@ -34,5 +45,7 @@ router.post('/login',authController.login)
 router.get('/logout',authController.logout)
 router.post('/agregarpersonal',personalcontroller.agregarPersonal)
 router.get('/eliminarpersonal/:id',authController.isAuthorizedAdmin,personalcontroller.eliminarPersonalId)
+router.get('/listarPersonalId/:id',personalcontroller.listarPersonalId)
+router.post('/modificarpersonal',personalcontroller.modificarPersonal)
 
 module.exports = router
