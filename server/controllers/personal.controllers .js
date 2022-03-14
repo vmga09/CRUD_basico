@@ -1,10 +1,12 @@
-const conexion=require('../config/conexion');
+///const conexion=require('../config/conexion');
 const myModel=require('../models/personal.models');
 
  module.exports={
     listarPersonal:function(req,res){
          myModel.listarPersonal(function(data){
-             res.send(data)
+             //res.send(data)
+             res.render('index',{ personal:data })
+             //console.log(data)
         })
      },
  
@@ -12,6 +14,7 @@ const myModel=require('../models/personal.models');
         var id = req.params.id;
          myModel.listarPersonalId(id,function(data){
              res.send(data)
+             
         })
      },
      
@@ -30,7 +33,8 @@ const myModel=require('../models/personal.models');
      eliminarPersonalId:function(req,res){
         var id = req.params.id;
          myModel.eliminarPersonalId(id,function(data){
-             res.send(data)
+             //res.send(data)
+             res.redirect('/')
         })
      },
 

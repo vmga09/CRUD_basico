@@ -8,7 +8,7 @@ const personalcontroller = require('../controllers/personal.controllers ')
 
 // Rutas para las vistas
 
-router.get('/',authController.isAuthenticated,(req,res)=>{
+router.get('/',authController.isAuthenticated,personalcontroller.listarPersonal,(req,res)=>{
     res.render('index')
 })
 
@@ -25,10 +25,14 @@ router.get('/agregarpersonal',authController.isAuthorizedAdmin,(req,res)=>{
 })
 
 
+
+
+
 //router.post('/api/register',authController.register)
 router.post('/finduser',authController.validarusuario)
 router.post('/login',authController.login)
 router.get('/logout',authController.logout)
 router.post('/agregarpersonal',personalcontroller.agregarPersonal)
+router.get('/eliminarpersonal/:id',authController.isAuthorizedAdmin,personalcontroller.eliminarPersonalId)
 
 module.exports = router
