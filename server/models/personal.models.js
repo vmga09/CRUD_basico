@@ -20,6 +20,7 @@ const conexion = require('../config/conexion');
         conexion.query(sql,id,function(err,rows,fields){
             if(err) throw err;
             else{
+                
                 return callback(rows[0]);
             } 
         })

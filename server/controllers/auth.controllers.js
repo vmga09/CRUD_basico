@@ -153,8 +153,10 @@ exports.login = async (req,res) =>{
                 }
                 else 
                 {
+                 
+            /*        
                     
-                /* res.render('index',{
+                 res.render('index',{
                     alert:true,
                     alertTitle: "Error",
                     alertMessage:"No esta autorizado para ejecutar esta acción",
@@ -164,9 +166,9 @@ exports.login = async (req,res) =>{
                     ruta:'/'
 
 
-                    }) */
+                    }) 
                     
-
+                 */
 
 
                     res.redirect('/')
