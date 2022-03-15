@@ -25,9 +25,9 @@ router.get('/agregarpersonal',authController.isAuthorizedAdmin,(req,res)=>{
 })
 
 
-router.get('/editarpersonal',authController.isAuthenticated,(req,res)=>{
-        res.render('editarpersonal')
-    })
+//router.get('/editarpersonal',authController.isAuthenticated,authController.isAuthorizedAdmin,(req,res)=>{
+ //       res.render('editarpersonal')
+ //   })
 
 
 // router.get('/modificarpersonal',authController.isAuthorizedAdmin,(req,res)=>{
@@ -42,6 +42,7 @@ router.get('/editarpersonal',authController.isAuthenticated,(req,res)=>{
 router.post('/finduser',authController.validarusuario)
 router.post('/login',authController.login)
 router.get('/logout',authController.logout)
+router.get('/mostrarpersonal',personalcontroller.listarPersonal)
 router.post('/agregarpersonal',personalcontroller.agregarPersonal)
 router.get('/eliminarpersonal/:id',authController.isAuthorizedAdmin,personalcontroller.eliminarPersonalId)
 router.get('/listarPersonalId/:id',authController.isAuthorizedAdmin,personalcontroller.listarPersonalId)

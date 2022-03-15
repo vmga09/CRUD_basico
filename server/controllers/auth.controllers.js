@@ -88,6 +88,7 @@ exports.login = async (req,res) =>{
                         console.log(results[0].role_id)
                         console.log(req.session.role)
                         res.cookie('jwt',token,cookieOptions)
+                        
                         res.render('login',{
                             alert:true,
                             alertTitle: "Conexion Exitosa",
@@ -154,20 +155,20 @@ exports.login = async (req,res) =>{
                 else 
                 {
                  
-            /*        
-                    
+                  
+               /*     
                  res.render('index',{
                     alert:true,
                     alertTitle: "Error",
                     alertMessage:"No esta autorizado para ejecutar esta acción",
                     alertIcon:'error',
-                    showConfirmButton: false,
-                    timer: 800,
+                    showConfirmButton: true,
+                    timer: false,
                     ruta:'/'
 
 
                     }) 
-                    
+                   
                  */
 
 

@@ -46,6 +46,7 @@
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       <a class="nav-link px-3" href="/logout">Sign out</a>
+      
     </div>
   </div>
 </header>
@@ -99,9 +100,9 @@
 
       <h2>Personal registrado</h2>
       <div class="table-responsive">
-        <table class="table table-striped table-sm">
+        <table class="table table-primary table-striped table-sm">
           <thead>
-            <tr>
+            <tr class="table-dark">
               <th scope="col">ID</th>
               <th scope="col">Nombre</th>
               <th scope="col">Cargo</th>
@@ -112,7 +113,7 @@
           </thead>
           <tbody>
               <% personal.forEach((personal)=>{ %>
-            <tr>
+            <tr class="table-success" >
               <td><%= personal.id %></td>
               <td><%= personal.nombre %></td>
               <td><%= personal.cargo %></td>
@@ -134,5 +135,9 @@
       <!-- <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
       -->
      
+      
+      
+      
+
   </body>
 </html>
