@@ -61,6 +61,20 @@ const conexion = require('../config/conexion');
                 return callback(rows);
         } 
     })
+},
+
+findpersonal:function(nombre,correo,callback){
+    //let sql = 'select username,email from users where username=? or email=?';
+    conexion.query('select nombre,correo from personal where nombre=? or correo=?',
+    [nombre, correo],
+    (err,rows,fields)=> {
+        if (err) throw err;
+        else {
+            //console.log(rows);
+            return callback(rows[0]);
+        }
+    }
+    )
 }
 
 

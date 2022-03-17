@@ -27,7 +27,7 @@ exports.validarusuario = async(req,res)=>{
         res.render('register',{
             alert:true,
             alertTitle: "Advertencia",
-            alerstMessage:"Uno o mas datos estan sin completar",
+            alerstMessage:"Uno o mas campos estan sin completar",
             alertIcon:'info',
             showConfirmButton: true,
             timer: false,

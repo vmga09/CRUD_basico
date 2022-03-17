@@ -57,27 +57,17 @@
                 <div class="card border-primary">
                     <div class="card-header bg-primary text-white">Modificar personal</div>
                     <div class="card-body text-primary">
-                        <form action="/modificarpersonal/<%= personal.id %>" method="POST" id="formulario">
+                        <form action="/modificarpersonal/<%= personal.id %>" method="POST" >
                                 <input id="id" name="id" value="<%= personal.id %>" hidden>
-                            <div class="mb-3  formulario__grupo" id="grupo__nombre">
-                                <label for="nombre" class="form-label formulario__label">Ingrese Nombre</label>
-                                <div class="formulario__grupo-input">
-                                <input id="nombre" name="nombre" value="<%= personal.nombre %>" type="text" class="form-control" aria-describedby="emailHelp">
-                                <i class="formulario__validacion-estado fas fa-times-circle"></i>                     
-                                </div> 
-                                <p class="formulario__input-error">El nombre tiene que ser de 4 a 16 dígitos y solo puede contener letras.</p>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Ingrese Nombre</label>
+                                <input id="nombre" name="nombre" value="<%= personal.nombre %>" type="text" class="form-control" aria-describedby="emailHelp"> 
                             </div>
-
-                            <div class="mb-3 formulario__grupo" id="grupo__cargo">
-                                <label for="cargo" class="form-label formulario__label">Ingrese Cargo</label>
-                                <div class="formulario__grupo-input">
-                                <input id="cargo" name="cargo" value="<%= personal.cargo %>"type="text" class="form-control" >
-                                <i class="formulario__validacion-estado fas fa-times-circle"></i> 
-                              </div>
-                              <p class="formulario__input-error">El cargo solo debe contener letras</p>
+                            <div class="mb-3">
+                                <label for="cargo" class="form-label">Ingrese Cargo</label>
+                                <input id="cargo" name="cargo" value="<%= personal.cargo %>"type="text" class="form-control" > 
                             </div>
-
-                            <div class="mb-3 formulario__grupo" id="grupo_correo">
+                            <div class="mb-3">
                                 <label for="correo" class="form-label">Ingrese Correo</label>
                                 <input id="correo" name="correo" value="<%= personal.correo %>" type="email" class="form-control" > 
                             </div>

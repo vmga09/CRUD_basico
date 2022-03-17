@@ -39,22 +39,45 @@ const myModel=require('../models/personal.models');
                      })
                }
          else{
+        
+          myModel.findpersonal(nombre,correo,function(data){
 
-        myModel.agregarPersonal(nombre,cargo,correo,function(data){
-             //res.send(nombre,cargo,correo)
-             //res.send(data)
-             res.render('index',{
-               alert:true,
-               alertTitle: "Registro exitoso",
-               alertMessage:"Personal registrado exitosamente",
-               alertIcon:'success',
-               showConfirmButton: false,
-               timer: 1000,
-               ruta:'/'
-           })
+            if(data!=undefined){
 
-             //res.redirect('/')
-        })
+               res.render('agregarpersonal',{
+                  alert:true,
+                  alertTitle: "Error",
+                  alertMessage:"Personal y/o email ya existe",
+                  alertIcon:'error',
+                  showConfirmButton: true,
+                  timer: false,
+                  ruta:'/agregarpersonal'
+              })
+
+            }
+            else {
+
+               myModel.agregarPersonal(nombre,cargo,correo,function(data){
+                  //res.send(nombre,cargo,correo)
+                  //res.send(data)
+                  res.render('index',{
+                    alert:true,
+                    alertTitle: "Registro exitoso",
+                    alertMessage:"Personal registrado exitosamente",
+                    alertIcon:'success',
+                    showConfirmButton: false,
+                    timer: 1000,
+                    ruta:'/'
+                })
+     
+                  //res.redirect('/')
+             })
+
+            }
+          })
+
+
+       
       }
      }, 
     
@@ -71,9 +94,27 @@ const myModel=require('../models/personal.models');
       var nombre = req.body.nombre;
       var cargo = req.body.cargo;
       var correo = req.body.correo;
-      myModel.modificarPersonal(id,nombre,cargo,correo,function(data){
-           
-           res.redirect('/')
-      })
+
+      if(!nombre || !cargo || !correo ){
+         res.render('agregarpersonal',{
+         alert:true,
+         alertTitle: "Advertencia",
+         alertMessage:"Uno o mas datos estan sin completar",
+         alertIcon:'info',
+         showConfirmButton: true,
+         timer: false,
+         ruta:'/'
+           })
+     }
+
+     else
+     {
+         myModel.modificarPersonal(id,nombre,cargo,correo,function(data){
+          
+            res.redirect('/')
+
+         })
+      }
+   
    } 
  }
