@@ -38,6 +38,9 @@
   <body class="text-center">
     
 <main class="form-signin">
+  
+
+
   <form id="formLogin" action="/login" method="POST">
     <img class="mb-4" src="img/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Por favor ingresa</h1>
@@ -61,7 +64,7 @@
   <!-- <a href="/register" type="button" class=" w-100 btn btn-lg btn-success">Registrarse</a> -->
   
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <% if(alert) { %>
+  <% if(locals.alert) { %>
   <script>
       Swal.fire({
           title: '<%= alertTitle %>',

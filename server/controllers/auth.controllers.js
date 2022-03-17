@@ -8,8 +8,10 @@ const User = require('../models/auth.modeles');
 const bcryptjs = require('bcryptjs');
 const { getDefaultFlags } = require('mysql/lib/ConnectionConfig');
 const {promisify} = require('util');
-const { append } = require('express/lib/response');
+const { append, clearCookie } = require('express/lib/response');
 const { NULL } = require('mysql/lib/protocol/constants/types');
+const myModel=require('../models/personal.models');
+//const { removeTicks } = require('sequelize/types/utils');
 
 
 
@@ -21,16 +23,52 @@ exports.validarusuario = async(req,res)=>{
     const role_id = req.body.role_id;
     const passHash = await bcryptjs.hash(password,8)
     
+    if(!username || !password || !email || !role_id){
+        res.render('register',{
+            alert:true,
+            alertTitle: "Advertencia",
+            alerstMessage:"Uno o mas datos estan sin completar",
+            alertIcon:'info',
+            showConfirmButton: true,
+            timer: false,
+            ruta:'/register'
+        })
+    }
+
+
+    else {
+
     User.finduser(username,email,function(data){
         
         if(data!=undefined){
             //res.send('usuario ya existe')
-            res.redirect('/register')
+           // res.redirect('/register')
+
+            res.render('register',{
+                alert:true,
+                alertTitle: "Error",
+                alerstMessage:"Usuario y/o email ya existe",
+                alertIcon:'error',
+                showConfirmButton: true,
+                timer: false,
+                ruta:'/register'
+            })
         }
         else {
             User.register(username,email,passHash,role_id,function(resp){
                 //res.send(resp)
-                res.redirect('/')
+
+                res.render('register',{
+                    alert:true,
+                    alertTitle: "Registro de usuario",
+                    alerstMessage:"Registro de usuario exitoso",
+                    alertIcon:'success',
+                    showConfirmButton: false,
+                    timer: 1000,
+                    ruta:'/'
+                })
+
+                //res.redirect('/')
             })
             
            
@@ -38,11 +76,16 @@ exports.validarusuario = async(req,res)=>{
         
         
     })
+
+  }
 }
 
 
 exports.login = async (req,res) =>{
+
          try {
+            res.clearCookie('jwt')
+            res.clearCookie('connect.sid')
             const username = req.body.username;
             const password = req.body.password;
             
@@ -155,8 +198,10 @@ exports.login = async (req,res) =>{
                 else 
                 {
                  
+
                   
-               /*     
+                
+                    
                  res.render('index',{
                     alert:true,
                     alertTitle: "Error",
@@ -168,11 +213,9 @@ exports.login = async (req,res) =>{
 
 
                     }) 
+                
                    
-                 */
 
-
-                    res.redirect('/')
                 }
                     
         } catch (error) {
@@ -186,9 +229,23 @@ exports.login = async (req,res) =>{
 
 
 
-     exports.logout = (req,res) =>{
+     exports.logout = async (req,res) =>{
+
          res.clearCookie('jwt')
          res.clearCookie('connect.sid')
-         
-         return res.redirect('/')
+               
+         res.render('index',{
+            alert:true,
+            alertTitle: "Logout",
+            alertMessage:"Logout exitoso",
+            alertIcon:'success',
+            showConfirmButton: false,
+            timer: 800,
+            ruta:'/inicio'
+
+
+            })
+
+
+         //return res.redirect('/')
      }

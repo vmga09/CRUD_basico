@@ -5,8 +5,9 @@ const myModel=require('../models/personal.models');
     listarPersonal:function(req,res){
          myModel.listarPersonal(function(data){
              //res.send(data)
+             //req.flash('personaldata',data)
              res.render('index',{ personal:data })
-             //console.log(data)
+             //console.log(personal)
         })
      },
  
@@ -25,11 +26,36 @@ const myModel=require('../models/personal.models');
         var nombre = req.body.nombre;
         var cargo = req.body.cargo;
         var correo = req.body.correo;
+
+         if(!nombre || !cargo || !correo ){
+                   res.render('agregarpersonal',{
+                   alert:true,
+                   alertTitle: "Advertencia",
+                   alertMessage:"Uno o mas datos estan sin completar",
+                   alertIcon:'info',
+                   showConfirmButton: true,
+                   timer: false,
+                   ruta:'/agregarpersonal'
+                     })
+               }
+         else{
+
         myModel.agregarPersonal(nombre,cargo,correo,function(data){
              //res.send(nombre,cargo,correo)
              //res.send(data)
-             res.redirect('/')
+             res.render('index',{
+               alert:true,
+               alertTitle: "Registro exitoso",
+               alertMessage:"Personal registrado exitosamente",
+               alertIcon:'success',
+               showConfirmButton: false,
+               timer: 1000,
+               ruta:'/'
+           })
+
+             //res.redirect('/')
         })
+      }
      }, 
     
      eliminarPersonalId:function(req,res){

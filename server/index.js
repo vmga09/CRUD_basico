@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
 dotenv.config({path:'./env/.env'});
 const session = require('express-session')
+//const flash = require('connect-flash')
 
 
 
@@ -28,6 +29,13 @@ app.use(session({
    // cookie: { secure: true }
    cookie: {maxAge: 24*60*60*1000}
   }))
+
+//app.use(flash());
+
+//app.use(function(req, res, next){
+//    res.locals.message = req.flash();
+//    next();
+//});
 
 
 //Admite formato json para body

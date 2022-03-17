@@ -9,7 +9,7 @@ const personalcontroller = require('../controllers/personal.controllers ')
 // Rutas para las vistas
 
 router.get('/',authController.isAuthenticated,personalcontroller.listarPersonal,(req,res)=>{
-    res.render('index')
+     res.render('index',{alert:false})
 })
 
 router.get('/inicio',(req,res)=>{
@@ -17,12 +17,16 @@ router.get('/inicio',(req,res)=>{
 })
 
 router.get('/register',authController.isAuthorizedAdmin,(req,res)=>{
-    res.render('register')
+    res.render('register',{alert:false})
 })
 
 router.get('/agregarpersonal',authController.isAuthorizedAdmin,(req,res)=>{
     res.render('agregarpersonal')
 })
+
+
+
+
 
 
 //router.get('/editarpersonal',authController.isAuthenticated,authController.isAuthorizedAdmin,(req,res)=>{
@@ -43,7 +47,7 @@ router.post('/finduser',authController.validarusuario)
 router.post('/login',authController.login)
 router.get('/logout',authController.logout)
 router.get('/mostrarpersonal',personalcontroller.listarPersonal)
-router.post('/agregarpersonal',personalcontroller.agregarPersonal)
+router.post('/agregarpersonal',authController.isAuthorizedAdmin,personalcontroller.agregarPersonal)
 router.get('/eliminarpersonal/:id',authController.isAuthorizedAdmin,personalcontroller.eliminarPersonalId)
 router.get('/listarPersonalId/:id',authController.isAuthorizedAdmin,personalcontroller.listarPersonalId)
 router.post('/modificarpersonal/:id',personalcontroller.modificarPersonal)
