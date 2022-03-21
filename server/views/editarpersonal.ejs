@@ -77,10 +77,17 @@
                               <p class="formulario__input-error">El cargo solo debe contener letras</p>
                             </div>
 
-                            <div class="mb-3 formulario__grupo" id="grupo_correo">
-                                <label for="correo" class="form-label">Ingrese Correo</label>
-                                <input id="correo" name="correo" value="<%= personal.correo %>" type="email" class="form-control" > 
+                            <div class="mb-3 formulario__grupo" id="grupo__correo">
+                                <label for="correo" class="form-label formulario__label">Ingrese Correo</label>
+                                <div class="formulario__grupo-input"  >
+                                <input id="correo" name="correo" value="<%= personal.correo %>" type="email" class="form-control" >
+                                <i class="formulario__validacion-estado fas fa-times-circle"></i> 
+                                </div> 
+                                <p class="formulario__input-error">El cargo solo debe contener letras, numeros , puntos guiones</p>
                             </div>
+                           <br>
+                           
+
                             <div>
                                 <div class="card-footer bg-transparent border-primary">
                                     <a href="/" type="button" class="btn btn-secondary">Cancelar</a>
@@ -101,5 +108,10 @@
      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
     -->
      
+
+
+
+    <script src="../public/js/editarpersonal.validaciones.js"></script>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
   </body>
 </html>

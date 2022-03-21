@@ -88,7 +88,7 @@ exports.login = async (req,res) =>{
             res.clearCookie('connect.sid')
             const username = req.body.username;
             const password = req.body.password;
-            
+            console.log('usuario:'+username)
               if(!username || !password){
                   res.render('login',{
                       alert:true,
@@ -105,7 +105,7 @@ exports.login = async (req,res) =>{
                 [username],
                 async (error,results)=>{
                     if(results.length ==0 || ! (await bcryptjs.compare(password, results[0].password))){
-                        res.render('login',{
+                       /* res.render('login',{
                             alert:true,
                             alertTitle: "Error",
                             alertMessage:"Usuario y/o password incorrectos",
@@ -113,7 +113,8 @@ exports.login = async (req,res) =>{
                             showConfirmButton: true,
                             timer: false,
                             ruta:'inicio'
-                        })
+                        }) */
+                        res.status(401).send('Not authorized');
                     }
                     else{
                         //res.send('usuario correcto')
@@ -121,16 +122,21 @@ exports.login = async (req,res) =>{
                         const token  = jwt.sign({id:id},process.env.JWT_SECRETO,{
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
-                        //console.log(token)
+                        //console.log(token) 
                         const cookieOptions = {
                             expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             httpOnly:true
                         }
                         req.session.role = results[0].role_id
-                        
-                        console.log(results[0].role_id)
-                        console.log(req.session.role)
-                        res.cookie('jwt',token,cookieOptions)
+                        const role = req.session.id
+                        console.log(req.session.id)
+                        console.log(req.session.cookie)
+                        //console.log(role)
+                        //console.log(results[0].role_id)
+                        //console.log(req.session.role)
+                        //res.cookie('jwt',token,cookieOptions)
+                        return res.status(200).json({token,cookieOptions,role})
+
                         
                         res.render('login',{
                             alert:true,
@@ -141,8 +147,8 @@ exports.login = async (req,res) =>{
                             timer: 800,
                             ruta:'/'
                         })
-
-
+                        
+                        //return res.status(200).json({token,cookieOptions,role})
 
 
                         //res.redirect('/')
@@ -192,7 +198,10 @@ exports.login = async (req,res) =>{
         try {
             
                 if(role == 'admin'){
-                  
+                     
+
+
+
                     return next()
                 }
                 else 
@@ -201,7 +210,7 @@ exports.login = async (req,res) =>{
 
                   
                 
-                    
+                 //res.status(401).json({ error: 'Unauthorized' })
                  res.render('index',{
                     alert:true,
                     alertTitle: "Error",
