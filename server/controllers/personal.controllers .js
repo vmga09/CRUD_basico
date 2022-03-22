@@ -4,9 +4,9 @@ const myModel=require('../models/personal.models');
  module.exports={
     listarPersonal:function(req,res){
          myModel.listarPersonal(function(data){
-             //res.send(data)
+             res.send(data)
              //req.flash('personaldata',data)
-             res.render('index',{ personal:data })
+             //res.render('index',{ personal:data })
              //console.log(personal)
         })
      },

@@ -35,6 +35,27 @@ const routes: Routes = [
   component: LoginComponent
 
 }
+,
+{
+
+  path: 'editarpersonal',
+  component: EditarpersonalComponent,
+  canActivate: [AuthGuard]
+
+},
+{
+
+  path: 'agregarpersonal',
+  component: AgregarpersonalComponent,
+  canActivate: [AuthGuard]
+},
+{
+
+  path: 'agregarusuario',
+  component: AgregarusuariosComponent,
+  canActivate: [AuthGuard]
+
+}
 
 
 
