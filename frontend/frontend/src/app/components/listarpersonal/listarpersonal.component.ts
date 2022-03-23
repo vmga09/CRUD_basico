@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ListarpersonalService } from '../../services/listarpersonal.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-listarpersonal',
@@ -8,19 +9,24 @@ import { ListarpersonalService } from '../../services/listarpersonal.service';
 })
 export class ListarpersonalComponent implements OnInit {
 
-  constructor( private listarpersonalService:ListarpersonalService) { }
+  personals:any = [];
+  
+  
+  constructor( private listarpersonalService:ListarpersonalService , private Router:Router) { }
 
-  ngOnInit() {
+  ngOnInit()   {
     this.listarpersonalService.listarpersonal()
     .subscribe(
       res => {
         console.log(res)
-        //this.listarpersonalService
+        this.personals = <any>res
+        console.log(this.personals)
 
       },
       err => console.log(err) 
     )
-
+    
   }
 
+  
 }
