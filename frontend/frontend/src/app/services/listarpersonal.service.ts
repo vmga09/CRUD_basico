@@ -14,4 +14,26 @@ export class ListarpersonalService {
     return this.http.get<any>(this.URL + '/mostrarpersonal');
 
   }
+
+  getPersonalId(id:any) 
+  { 
+    return this.http.get(URL+`/listarPersonalId/${id}`);
+  }
+
+  eliminarPersonal(id:any)
+  { 
+    return this.http.get(URL+`/eliminarPersonal/${id}`);
+  }
+
+  agregarPersonal(personal:any)
+  { 
+    return this.http.post<any>(this.URL+'/agregarpersonal', personal);
+  }
+
+   modificarPersonal(id:any,personal:any)
+  { 
+    return this.http.put(URL+`/modificarPersonal/${id}`, personal);
+  }
+
+
 }

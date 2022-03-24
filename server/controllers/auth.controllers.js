@@ -119,7 +119,8 @@ exports.login = async (req,res) =>{
                     else{
                         //res.send('usuario correcto')
                         const id = results[0].id
-                        const token  = jwt.sign({id:id},process.env.JWT_SECRETO,{
+                        const role_id = results[0].role_id
+                        const token  = jwt.sign({id:id,role_id:role_id},process.env.JWT_SECRETO,{
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
                         //console.log(token) 
@@ -169,9 +170,12 @@ exports.login = async (req,res) =>{
 
 
      exports.isAuthenticated = async (req,res,next)=>{
-         if(req.cookies.jwt){
+        // if(req.cookies.jwt)
+         if(req.headers.authorization)
+         {
              try {
-                 const decodificada = await jwt.verify(req.cookies.jwt, process.env.JWT_SECRETO)
+                 //const decodificada = await jwt.verify(req.cookies.jwt, process.env.JWT_SECRETO)
+                 const decodificada = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO)
                  //console.log(decodificada.id)
                  conexion.query('SELECT * FROM users id = ?',[decodificada.id],(error, results)=>{
                      if(!results){return next()}

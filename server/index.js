@@ -26,8 +26,9 @@ app.use(session({
     secret: 'secreto',
     resave: false,
     saveUninitialized: false,
-   // cookie: { secure: true }
-   cookie: {maxAge: 24*60*60*1000}
+    //cookie: { secure: true }
+   cookie: {maxAge: 24*60*60*1000,
+            httpOnly: false}
   }))
 
 //app.use(flash());

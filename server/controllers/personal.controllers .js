@@ -28,7 +28,7 @@ const myModel=require('../models/personal.models');
         var correo = req.body.correo;
 
          if(!nombre || !cargo || !correo ){
-                   res.render('agregarpersonal',{
+                   /* res.render('agregarpersonal',{
                    alert:true,
                    alertTitle: "Advertencia",
                    alertMessage:"Uno o mas datos estan sin completar",
@@ -37,13 +37,15 @@ const myModel=require('../models/personal.models');
                    timer: false,
                    ruta:'/agregarpersonal'
                      })
+                     */
+                    return res.status(501).send('Falta información, campos vacios');
                }
          else{
         
           myModel.findpersonal(nombre,correo,function(data){
 
             if(data!=undefined){
-
+              /*
                res.render('agregarpersonal',{
                   alert:true,
                   alertTitle: "Error",
@@ -53,7 +55,8 @@ const myModel=require('../models/personal.models');
                   timer: false,
                   ruta:'/agregarpersonal'
               })
-
+              */
+              return res.status(501).send('Usuario ya existente');
             }
             else {
 
