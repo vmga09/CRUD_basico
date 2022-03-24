@@ -46,7 +46,7 @@ router.get('/agregarpersonal',authController.isAuthorizedAdmin,(req,res)=>{
 router.post('/finduser',authController.validarusuario)
 router.post('/login',authController.login)
 router.get('/logout',authController.logout)
-router.get('/mostrarpersonal',personalcontroller.listarPersonal)
+router.get('/mostrarpersonal',authController.isAuthenticated,personalcontroller.listarPersonal)
 //router.post('/agregarpersonal',authController.isAuthorizedAdmin,personalcontroller.agregarPersonal)
 router.post('/agregarpersonal',personalcontroller.agregarPersonal)
 router.get('/eliminarpersonal/:id',authController.isAuthorizedAdmin,personalcontroller.eliminarPersonalId)

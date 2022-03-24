@@ -104,6 +104,7 @@ exports.login = async (req,res) =>{
                 conexion.query('select * from users where username=?',
                 [username],
                 async (error,results)=>{
+                    console.log(results[0])
                     if(results.length ==0 || ! (await bcryptjs.compare(password, results[0].password))){
                        /* res.render('login',{
                             alert:true,
@@ -120,7 +121,7 @@ exports.login = async (req,res) =>{
                         //res.send('usuario correcto')
                         const id = results[0].id
                         const role_id = results[0].role_id
-                        const token  = jwt.sign({id:id,role_id:role_id},process.env.JWT_SECRETO,{
+                        const token  = jwt.sign({id:id},process.env.JWT_SECRETO,{
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
                         //console.log(token) 
@@ -128,15 +129,18 @@ exports.login = async (req,res) =>{
                             expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             httpOnly:true
                         }
-                        req.session.role = results[0].role_id
-                        const role = req.session.id
-                        console.log(req.session.id)
-                        console.log(req.session.cookie)
-                        //console.log(role)
+                        //req.session.role = results[0].role_id
+                        role = results[0].role_id
+                        //const role = req.session.id
+                        const roleHash = await bcryptjs.hash(role,8)
+                        //console.log(req.session.id)
+                        //console.log(req.session.cookie)
+                        console.log('el token es: '+token)
+                        console.log('el role es: '+roleHash)
                         //console.log(results[0].role_id)
                         //console.log(req.session.role)
                         //res.cookie('jwt',token,cookieOptions)
-                        return res.status(200).json({token,cookieOptions,role})
+                        return res.status(200).json({token,cookieOptions,roleHash})
 
                         
                         res.render('login',{
@@ -171,16 +175,26 @@ exports.login = async (req,res) =>{
 
      exports.isAuthenticated = async (req,res,next)=>{
         // if(req.cookies.jwt)
+        console.log(req.headers.authorization)
          if(req.headers.authorization)
+         
          {
              try {
                  //const decodificada = await jwt.verify(req.cookies.jwt, process.env.JWT_SECRETO)
                  const decodificada = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO)
-                 //console.log(decodificada.id)
-                 conexion.query('SELECT * FROM users id = ?',[decodificada.id],(error, results)=>{
-                     if(!results){return next()}
+                 console.log(decodificada.id)
+                 conexion.query('SELECT * FROM users id = ?',
+                 [decodificada.id],
+                 async(error, results)=>{   
+                     if(!results){
+                         
+
+                    //return res.status(401).send('Not authorized de nuevo');    
+                        return next()
+                    
+                    }
                      req.username = results[0]
-                   
+                     console.log(req.username)
                      return next()
                      
                  })

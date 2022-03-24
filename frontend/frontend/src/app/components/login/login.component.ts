@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       res => {
         console.log(res);
         localStorage.setItem('token',res.token);
-        localStorage.setItem('role',res.role);
+        localStorage.setItem('role',res.roleHash);
         this.router.navigate(['/listar']);
       },
       err => console.log(err)
