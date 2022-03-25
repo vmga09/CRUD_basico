@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule} from '@angular/forms';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,7 @@ import { EditarpersonalComponent } from './components/editarpersonal/editarperso
 import { LoginComponent } from './components/login/login.component';
 import { AgregarusuariosComponent } from './components/agregarusuarios/agregarusuarios.component';
 import { AuthGuard}  from './auth.guard'
+import { TokenInterceptorService } from './services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AuthGuard}  from './auth.guard'
     HttpClientModule
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi:true}
   ],
   bootstrap: [AppComponent]
 })

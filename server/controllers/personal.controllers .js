@@ -3,6 +3,7 @@ const myModel=require('../models/personal.models');
 
  module.exports={
     listarPersonal:function(req,res){
+       console.log(req.username)
          myModel.listarPersonal(function(data){
              res.send(data)
              //req.flash('personaldata',data)

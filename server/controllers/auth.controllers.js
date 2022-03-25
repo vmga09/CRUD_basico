@@ -135,8 +135,8 @@ exports.login = async (req,res) =>{
                         const roleHash = await bcryptjs.hash(role,8)
                         //console.log(req.session.id)
                         //console.log(req.session.cookie)
-                        console.log('el token es: '+token)
-                        console.log('el role es: '+roleHash)
+                        //console.log('el token es: '+token)
+                        //console.log('el role es: '+roleHash)
                         //console.log(results[0].role_id)
                         //console.log(req.session.role)
                         //res.cookie('jwt',token,cookieOptions)
@@ -175,50 +175,59 @@ exports.login = async (req,res) =>{
 
      exports.isAuthenticated = async (req,res,next)=>{
         // if(req.cookies.jwt)
-        console.log(req.headers.authorization)
+        //console.log(req.headers.authorization)
+
+        const rolekey = req.headers.rolekey
+        console.log(req.headers.rolekey)
+        //console.log(req.headers.RoleKey)
          if(req.headers.authorization)
          
          {
              try {
                  //const decodificada = await jwt.verify(req.cookies.jwt, process.env.JWT_SECRETO)
                  const decodificada = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO)
-                 console.log(decodificada.id)
-                 conexion.query('SELECT * FROM users id = ?',
+                 //console.log('el id es:'+decodificada.id+'ID')
+                 conexion.query('select * from users where id=?',
                  [decodificada.id],
                  async(error, results)=>{   
                      if(!results){
+
+                        //console.log(results[0])
                          
 
-                    //return res.status(401).send('Not authorized de nuevo');    
-                        return next()
+                    return res.status(401).send('Not authorized, token not found!');    
+                        //return next()
                     
                     }
                      req.username = results[0]
-                     console.log(req.username)
+                     req.rolekey =  rolekey
+                     ///console.log(req.username)
                      return next()
                      
                  })
              } catch (error) {
                  console.log(error)
-                 return next()
+                 return res.status(401).send('Not authorized, invalid token'); //next()
                  
              }
          }else{
-             
-             res.redirect('/inicio')
+            return res.status(401).send('Not authorized, token not found!')
+            // res.redirect('/inicio')
          }
      }
 
     exports.isAuthorizedAdmin = async (req,res,next)=>{
         
-        const role = req.session.role
+        const rolekey = req.rolekey
+        console.log('Esto es:'+rolekey)
+        //console.log(rolekey)
+        //const role = req.session.role
       
         try {
             
-                if(role == 'admin'){
+                //if(role == 'admin'){
+                if(await bcryptjs.compare('admin', rolekey.substr(7))){
                      
-
-
 
                     return next()
                 }
@@ -228,8 +237,8 @@ exports.login = async (req,res) =>{
 
                   
                 
-                 //res.status(401).json({ error: 'Unauthorized' })
-                 res.render('index',{
+                res.status(401).json({ error: 'Unauthorized' })
+                 /* res.render('index',{
                     alert:true,
                     alertTitle: "Error",
                     alertMessage:"No esta autorizado para ejecutar esta acción",
@@ -240,15 +249,15 @@ exports.login = async (req,res) =>{
 
 
                     }) 
-                
+                */
                    
 
                 }
                     
         } catch (error) {
             console.log(error)
-            
-               return next()
+            res.status(401).json({ error: 'Unauthorized' })
+               //return next()
             
         }
 
