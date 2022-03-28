@@ -43,7 +43,7 @@ router.get('/agregarpersonal',authController.isAuthorizedAdmin,(req,res)=>{
 
 
 //router.post('/api/register',authController.register)
-router.post('/finduser',authController.validarusuario)
+router.post('/finduser',authController.isAuthenticated,authController.isAuthorizedAdmin,authController.validarusuario)
 router.post('/login',authController.login)
 router.get('/logout',authController.logout)
 router.get('/mostrarpersonal',authController.isAuthenticated,personalcontroller.listarPersonal)

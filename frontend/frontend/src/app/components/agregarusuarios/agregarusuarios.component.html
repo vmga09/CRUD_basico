@@ -1,1 +1,30 @@
-<p>agregarusuarios works!</p>
+<div class="container">
+    <p>AGREGAR USUARIO</p>
+    <div class="row">
+        <div class="col-sm-6">
+            <form  (ngSubmit)="agregarUsuario()">
+                <div class="mb-3">
+                    <label class="form-label">Nombre de Usuario</label>
+                    <input  [(ngModel)]="usuario.username" type="text" class="form-control " name="username" placeholder="Username" required>  
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Correo de Usuario</label>
+                    <input  [(ngModel)]="usuario.email" type="email" class="form-control" name="correo" placeholder="Correo" email="true" required>
+                   
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input  [(ngModel)]="usuario.password" type="password" class="form-control" name="password" placeholder="Password" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rol Id Usuario</label>
+                    <input  [(ngModel)]="usuario.role_id" type="text" class="form-control" name="role_id" placeholder="Role" required>
+                </div>
+                <button   type="submit"   (click)="agregarUsuario()" class="btn btn-primary" >Agregar</button>
+            </form>
+        </div>
+       
+
+
+    </div>
+</div>

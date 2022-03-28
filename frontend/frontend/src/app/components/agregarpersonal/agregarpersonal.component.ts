@@ -32,12 +32,12 @@ export class AgregarpersonalComponent implements OnInit {
     .subscribe(
       res=>{
         console.log(res)
-        this.router.navigate(['/listar'])
+        
       },
       err => console.log(err)
      
     )
-
+    this.router.navigate(['/listar'])
 
 
   }

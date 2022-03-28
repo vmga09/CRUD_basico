@@ -35,5 +35,11 @@ export class ListarpersonalService {
     return this.http.put(URL+`/modificarPersonal/${id}`, personal);
   }
 
+  agregarUsuario(usuario:any)
+  { 
+    return this.http.post<any>(this.URL+'/finduser', usuario);
+  }
+
+
 
 }
