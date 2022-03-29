@@ -5,16 +5,24 @@
                 Login
             </div>
             <div class="card-body">
-                <form (submit)="login()">
+                <form [formGroup] = "usuarioForm" (submit)="login()">
                     <div class="form-group">
-                        <input type="text" [(ngModel)]="usuario.username" name="username" class="form-control" placeholder="Username" required autofocus>
+                        <input formControlName="username1" [(ngModel)]="usuario.username" type="text" name="username" class="form-control form-control-lg" placeholder="Username" required autofocus>
+                        <div class="text-danger" *ngIf="usuarioForm.get('username1')?.hasError('required') && usuarioForm.get('username1')?.touched"><span>El nombre del usuario es <strong>obligatorio</strong></span></div>
                     </div>
                     <div class="form-group">
-                        <input type="password" [(ngModel)]="usuario.password" name="password" class="form-control" placeholder="Password" required>
+                        <input formControlName="password1"  [(ngModel)]="usuario.password" type="password" name="password" class="form-control form-control-lg" placeholder="Password" required>
+                        <div class="text-danger" *ngIf="usuarioForm.get('password1')?.hasError('required') && usuarioForm.get('password1')?.touched"><span>El password es <strong>obligatorio</strong></span></div>
+                        <!-- <div [hidden]="!usuarioForm.controls['password'].hasError('invalid')" class="alert alert-danger">
+                            There is no user account matching the entered data! Try again.
+                         </div> -->
                     </div>
-                    <button class="btn btn-success btn-block">
+                    <button class="btn btn-success btn-block" [disabled]="usuarioForm.invalid">
                         Ingresar
                     </button>
+                    <div *ngIf="incorrecta" class="alert alert-danger" >
+                        El usuario y/o password son incorrectos, intente nuevamente. 
+                    </div>
                 </form>
             </div>
         </div>

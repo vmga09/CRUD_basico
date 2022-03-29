@@ -64,7 +64,7 @@ exports.validarusuario = async (req, res) => {
             else {
                 User.register(username, email, passHash, role_id, function (resp) {
                     //res.send(resp)
-                    return res.status(200).send('Usuario ingresado');
+                    return res.status(200).send('Usuario ingresado'+role_id);
                    /* res.render('register', {
                         alert: true,
                         alertTitle: "Registro de usuario",
@@ -128,7 +128,7 @@ exports.login = async (req, res) => {
                         //res.send('usuario correcto')
                         const id = results[0].id
                         const role_id = results[0].role_id
-                        const token = jwt.sign({ id: id }, process.env.JWT_SECRETO, {
+                        const token = jwt.sign({ id: id , idr:role_id }, process.env.JWT_SECRETO, {
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
                         //console.log(token) 
@@ -137,9 +137,9 @@ exports.login = async (req, res) => {
                             httpOnly: true
                         }
                         //req.session.role = results[0].role_id
-                        role = results[0].role_id
+                        rid_ss0 = results[0].role_id
                         //const role = req.session.id
-                        const roleHash = await bcryptjs.hash(role, 8)
+                        const roleHash = await bcryptjs.hash(rid_ss0, 8)
                         //console.log(req.session.id)
                         //console.log(req.session.cookie)
                         //console.log('el token es: '+token)
@@ -147,9 +147,9 @@ exports.login = async (req, res) => {
                         //console.log(results[0].role_id)
                         //console.log(req.session.role)
                         //res.cookie('jwt',token,cookieOptions)
-                        return res.status(200).json({ token, cookieOptions, roleHash })
+                        return res.status(200).json({ token, cookieOptions, roleHash,rid_ss0 })
 
-                        /*        
+                        /*        s
                         res.render('login', {
                             alert: true,
                             alertTitle: "Conexion Exitosa",
