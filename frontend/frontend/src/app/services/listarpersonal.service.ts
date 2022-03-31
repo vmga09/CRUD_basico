@@ -6,7 +6,8 @@ import {HttpClient} from '@angular/common/http'
 })
 export class ListarpersonalService {
 
-  private URL = 'http://172.17.0.4:3000'
+  //private URL = 'http://172.17.0.4:3000'
+  private URL = 'http://localhost:3000'
 
   constructor(private http: HttpClient) { }
 
@@ -17,12 +18,13 @@ export class ListarpersonalService {
 
   getPersonalId(id:any) 
   { 
-    return this.http.get(URL+`/listarPersonalId/${id}`);
+    return this.http.get(this.URL+`/listarPersonalId/${id}`);
   }
 
   eliminarPersonal(id:any)
   { 
-    return this.http.get(URL+`/eliminarPersonal/${id}`);
+    return this.http.get(this.URL+`/eliminarPersonal/${id}`);
+    //return this.http.get(`${URL}/eliminarPersonal/${id}`);
   }
 
   agregarPersonal(personal:any)
@@ -32,7 +34,8 @@ export class ListarpersonalService {
 
    modificarPersonal(id:any,personal:any)
   { 
-    return this.http.put(URL+`/modificarPersonal/${id}`, personal);
+    return this.http.put<any>(this.URL+`/modificarpersonal/${id}`, personal);
+    //return this.http.put(this.URL+`/modificarPersonal`, personal);
   }
 
   agregarUsuario(usuario:any)
@@ -40,6 +43,5 @@ export class ListarpersonalService {
     return this.http.post<any>(this.URL+'/finduser', usuario);
   }
 
-
-
+ 
 }

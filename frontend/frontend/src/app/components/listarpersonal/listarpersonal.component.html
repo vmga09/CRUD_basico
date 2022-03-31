@@ -17,12 +17,12 @@
             <td>{{personal.cargo}}</td>
             <td>{{personal.correo}}</td>
             <td> 
-                <!-- <button   routerLink="/edit/{{personal.id}}" > type="button" class="btn btn-primary">Editar</button> --> 
-                <button  type="button" class="btn btn-primary">Editar</button>
+                <button   routerLink="/editarpersonal/{{personal.id}}"  type="button" class="btn btn-primary">Editar</button>
+                <!--<button  type="button" class="btn btn-primary">Editar</button> -->
             </td> 
             <td>
-                <!-- <button (click)="eliminarPersonal(personal.id)" type="button" class="btn btn-danger">Eliminar</button> -->
-              <button type="button" class="btn btn-danger">Eliminar</button>
+                <button (click)="eliminarPersonal(personal.id)" type="button" class="btn btn-danger">Eliminar</button> 
+              <!--<button type="button" class="btn btn-danger">Eliminar</button> -->
             </td>
           </tr> 
         </tbody>

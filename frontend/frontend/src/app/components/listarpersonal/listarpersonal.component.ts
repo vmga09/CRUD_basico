@@ -28,5 +28,25 @@ export class ListarpersonalComponent implements OnInit {
     
   }
 
+  eliminarPersonal(id: any): void {
+    console.log('Persona eliminada:', id)
+    this.listarpersonalService.eliminarPersonal(id)
+      .subscribe(
+        response => {
+          // this.refreshList();
+          console.log(response)
+        },
+        err => {
+          console.log(err)
+        });
+    alert("Usuario Eliminado")
+    window.location.reload();
+  }
+
+  modificarPersonal(id:any){
+    //editarPersonal(id:any){
+    this.Router.navigate(['/editarpersonal/:id'])
+    
+  }
   
 }

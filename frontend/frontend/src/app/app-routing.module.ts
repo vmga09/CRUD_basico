@@ -38,7 +38,7 @@ const routes: Routes = [
 ,
 {
 
-  path: 'editarpersonal',
+  path: 'editarpersonal/:id',
   component: EditarpersonalComponent,
   canActivate: [AuthGuard]
 

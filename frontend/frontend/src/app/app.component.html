@@ -18,6 +18,9 @@
             <a class="nav-link" routerLink="/agregarusuario"  routerLinkActive="active">Agregar usuario</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer;"(click)="authService.isadmin()">admin</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" style="cursor: pointer;"(click)="authService.logout()">Logout</a>
           </li>
         </ng-container>

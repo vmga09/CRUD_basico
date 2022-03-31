@@ -15,7 +15,9 @@ const myModel=require('../models/personal.models');
     listarPersonalId:function(req,res){
         const id = req.params.id;
          myModel.listarPersonalId(id,function(data){
-            res.render('editarpersonal',{ personal:data })
+            res.send(data)
+
+            //res.render('editarpersonal',{ personal:data })
             //console.log(data)
             
              
@@ -88,8 +90,8 @@ const myModel=require('../models/personal.models');
      eliminarPersonalId:function(req,res){
         var id = req.params.id;
          myModel.eliminarPersonalId(id,function(data){
-             //res.send(data)
-             res.redirect('/')
+             res.send(data)
+             //res.redirect('/')
         })
      },
 

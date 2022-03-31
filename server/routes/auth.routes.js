@@ -49,8 +49,9 @@ router.get('/logout',authController.logout)
 router.get('/mostrarpersonal',authController.isAuthenticated,personalcontroller.listarPersonal)
 //router.post('/agregarpersonal',authController.isAuthorizedAdmin,personalcontroller.agregarPersonal)
 router.post('/agregarpersonal',authController.isAuthenticated,authController.isAuthorizedAdmin,personalcontroller.agregarPersonal)
-router.get('/eliminarpersonal/:id',authController.isAuthorizedAdmin,personalcontroller.eliminarPersonalId)
-router.get('/listarPersonalId/:id',authController.isAuthorizedAdmin,personalcontroller.listarPersonalId)
-router.post('/modificarpersonal/:id',personalcontroller.modificarPersonal)
+router.get('/eliminarpersonal/:id',authController.isAuthenticated,authController.isAuthorizedAdmin,personalcontroller.eliminarPersonalId)
+router.get('/listarPersonalId/:id',authController.isAuthenticated,authController.isAuthorizedAdmin,personalcontroller.listarPersonalId)
+router.put('/modificarpersonal/:id',authController.isAuthenticated,authController.isAuthorizedAdmin,personalcontroller.modificarPersonal)
+router.get('/isadmin',authController.isAuthenticated,authController.isAdmin)
 
 module.exports = router

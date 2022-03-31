@@ -183,9 +183,9 @@ exports.login = async (req, res) => {
 exports.isAuthenticated = async (req, res, next) => {
     // if(req.cookies.jwt)
     //console.log(req.headers.authorization)
-
+     //console.log(req.headers)
     const rolekey = req.headers.rolekey
-    console.log(req.headers.rolekey)
+    //console.log(req.headers.rolekey)
     //console.log(req.headers.RoleKey)
     if (req.headers.authorization) {
         try {
@@ -255,7 +255,7 @@ exports.isAuthorizedAdmin = async (req, res, next) => {
         //if(role == 'admin'){
         if (await bcryptjs.compare('admin', rolekey.substr(7))) {
 
-
+            //res.status(200).send('IS OKrs')
             return next()
         }
         else {
@@ -290,6 +290,27 @@ exports.isAuthorizedAdmin = async (req, res, next) => {
 }
 
 
+exports.isAdmin = async (req, res, next) => {
+    const rolekey = req.rolekey 
+    try {
+        if (await bcryptjs.compare('admin', rolekey.substr(7))) {
+            
+            res.status(200).send('Autorized')       
+        }
+        else {
+            res.status(401).json({ error: 'Unauthorized' })    
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({ error: 'Unauthorized' })
+    }
+}
+
+
+
+
+
+
 
 exports.logout = async (req, res) => {
 
@@ -305,9 +326,6 @@ exports.logout = async (req, res) => {
         timer: 800,
         ruta: '/inicio'
 
-
     })
 
-
-    //return res.redirect('/')
 }

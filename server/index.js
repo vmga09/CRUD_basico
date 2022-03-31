@@ -17,7 +17,8 @@ const cors = require('cors');
 const router = require('./routes/auth.routes');
 
 var corsOptions = {
-    origin: "http://172.17.0.5:4200"
+    //origin: "http://172.17.0.5:4200"
+    origin: "http://localhost:4200"
 };
 
 //Express

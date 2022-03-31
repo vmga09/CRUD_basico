@@ -1,1 +1,30 @@
-<p>editarpersonal works!</p>
+<div class="container">
+    <p>EDITAR PERSONAL</p>
+    <div class="row">
+        <div class="col-sm-6">
+            <form  (ngSubmit)="modificarPersonal()">
+                <div class="mb-3">
+                    <label class="form-label">Nombre de Personal</label>
+                    <input  [(ngModel)]="personal.nombre" type="text" class="form-control " name="nombre" placeholder="Nombre" required>
+                    
+                    
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Cargo de Personal</label>
+                    <input  [(ngModel)]="personal.cargo" type="text" class="form-control" name="cargo" placeholder="Cargo" required>
+                   
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Correo de Personal</label>
+                    <input  [(ngModel)]="personal.correo" type="email" class="form-control" name="correo" placeholder="Correo" email="true" required>
+                   
+                </div>
+                <button   type="submit"   (click)="modificarPersonal()" class="btn btn-primary" >Editar</button>
+            </form>
+        </div>
+       
+
+
+    </div>
+</div>
+
