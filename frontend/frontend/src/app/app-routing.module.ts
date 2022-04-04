@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard';
+import {  AuthGuard } from './auth.guard';
 
 
 //Components
@@ -10,6 +10,7 @@ import { ListarpersonalComponent } from './components/listarpersonal/listarperso
 import { AgregarpersonalComponent } from './components/agregarpersonal/agregarpersonal.component'
 import { EditarpersonalComponent } from './components/editarpersonal/editarpersonal.component'
 import { AgregarusuariosComponent} from './components/agregarusuarios/agregarusuarios.component'
+import { UserviewComponent } from './components/userview/userview.component';
 
 
 
@@ -53,6 +54,13 @@ const routes: Routes = [
 
   path: 'agregarusuario',
   component: AgregarusuariosComponent,
+  canActivate: [AuthGuard]
+
+},
+{
+
+  path: 'userview',
+  component: UserviewComponent,
   canActivate: [AuthGuard]
 
 }

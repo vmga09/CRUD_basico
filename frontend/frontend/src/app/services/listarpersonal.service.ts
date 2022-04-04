@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,8 @@ import {HttpClient} from '@angular/common/http'
 export class ListarpersonalService {
 
   //private URL = 'http://172.17.0.4:3000'
-  private URL = 'http://localhost:3000'
+  //private URL = 'http://localhost:3000'
+  private URL = environment.apiURL
 
   constructor(private http: HttpClient) { }
 

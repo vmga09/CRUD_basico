@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AgregarusuariosComponent } from './components/agregarusuarios/agregarusuarios.component';
 import { AuthGuard}  from './auth.guard'
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { UserviewComponent } from './components/userview/userview.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     AgregarpersonalComponent,
     EditarpersonalComponent,
     LoginComponent,
-    AgregarusuariosComponent
+    AgregarusuariosComponent,
+    UserviewComponent
   ],
   imports: [
     BrowserModule,

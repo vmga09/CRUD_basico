@@ -1,3 +1,36 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto" >
+          <ng-container *ngIf="authService.loggedIn(); else loggedIn">
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/listar" routerLinkActive="active">Home</a>
+          </li>
+          <li class="nav-item">
+            <a   class="nav-link" routerLink="/agregarpersonal" routerLinkActive="active" >Agregar personal</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer;"(click)="authService.logout()">Logout</a>
+          </li>
+
+
+          
+        </ng-container>
+        <ng-template #loggedIn>
+ 
+        </ng-template>
+        </ul>
+      </div>
+    </div>
+  
+</nav>
+
+
 <div class="container">
     <p>AGREGAR USUARIO</p>
     <div class="row">
@@ -23,8 +56,7 @@
                 <button   type="submit"   (click)="agregarUsuario()" class="btn btn-primary" >Agregar</button>
             </form>
         </div>
-       
-
-
     </div>
 </div>
+
+

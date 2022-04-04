@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ListarpersonalService } from '../../services/listarpersonal.service';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-agregarusuarios',
@@ -17,7 +18,7 @@ export class AgregarusuariosComponent implements OnInit {
 
   };
 
-  constructor(private listarpersonalService:ListarpersonalService , private router:Router) { }
+  constructor(private listarpersonalService:ListarpersonalService , private router:Router, public authService:AuthService ) { }
 
   ngOnInit(): void {
   }

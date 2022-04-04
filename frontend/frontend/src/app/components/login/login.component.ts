@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient  } from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class LoginComponent implements OnInit {
   usuarioForm:  FormGroup;
+  private URL = environment.apiURL
   usuario = {
     username:'',
     password:''
@@ -19,7 +22,7 @@ export class LoginComponent implements OnInit {
   mensaje?:any;
   incorrecta?: boolean;
 
-  constructor(private authService: AuthService, private router:Router, private fb: FormBuilder ) {
+  constructor(private authService: AuthService, private router:Router, private fb: FormBuilder ,private http: HttpClient) {
 
     this.usuarioForm = this.fb.group({
       username1: ['',Validators.required],
@@ -29,6 +32,9 @@ export class LoginComponent implements OnInit {
     }
 
   ngOnInit(): void {
+
+
+    
   }
 
   login(): void{
@@ -38,10 +44,27 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.usuario)
     .subscribe(
       res => {
-        console.log(res);
+
         localStorage.setItem('token',res.token);
         localStorage.setItem('role',res.roleHash);
-        this.router.navigate(['/listar']);
+ 
+        this.http.get<any>(this.URL + '/isAdmin')
+        .subscribe(
+          res => {
+            console.log(res.status);
+          },
+          err => {
+              if(err.status == 200){
+                this.router.navigate(['/listar']);
+              
+              }else{
+                this.router.navigate(['/userview']);
+            
+              }
+          }
+          
+          );
+        
       },
       (serverLoginError: any) => {
         console.log('error in subscribe err');

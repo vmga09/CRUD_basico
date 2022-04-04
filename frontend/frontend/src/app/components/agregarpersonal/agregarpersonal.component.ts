@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListarpersonalService } from '../../services/listarpersonal.service';
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-agregarpersonal',
@@ -21,7 +22,7 @@ export class AgregarpersonalComponent implements OnInit {
   };
 
 
-  constructor(private listarpersonalService:ListarpersonalService , private router:Router ) {  }
+  constructor(private listarpersonalService:ListarpersonalService , private router:Router , public authService:AuthService) {  }
 
   ngOnInit(): void {
   }

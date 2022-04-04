@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ListarpersonalService } from '../../services/listarpersonal.service';
-import { Router,ActivatedRoute } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-editarpersonal',
@@ -17,7 +19,7 @@ export class EditarpersonalComponent implements OnInit {
 
   };
 
-  constructor(private listarpersonalService:ListarpersonalService , private router:Router, private activeRoute:ActivatedRoute) { 
+  constructor(private listarpersonalService:ListarpersonalService , private router:Router, private activeRoute:ActivatedRoute, public authService: AuthService) { 
 
 
    }
