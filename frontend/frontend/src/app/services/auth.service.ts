@@ -42,7 +42,7 @@ export class AuthService {
           console.log(this.estado)
           }else{
           this.estado = false
-          console.log(this.estado)
+          console.log('el estado es :'+this.estado)
           }
       }
       

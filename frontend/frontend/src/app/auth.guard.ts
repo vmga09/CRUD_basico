@@ -22,16 +22,27 @@ export class AuthGuard implements CanActivate {
 
 
   canActivate(): boolean {
-    //route: ActivatedRouteSnapshot,
+    //route: ActivatedRouteSnapshot
     //state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     //return true;
       if (this.authService.loggedIn()){
-        return true;
+          if(this.authService.isadmin()) {
+            console.log('EXITO')
+            return true;
+            }else 
+            {
+              console.log('USER')
+              this.router.navigate(['/userview'])
+              return false;
+            }
       }
 
       this.router.navigate(['/'])
       return false;
   
   }
+
+
+  
   
 }
