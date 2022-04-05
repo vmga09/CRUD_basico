@@ -45,5 +45,6 @@ export class ListarpersonalService {
     return this.http.post<any>(this.URL+'/finduser', usuario);
   }
 
+
  
 }

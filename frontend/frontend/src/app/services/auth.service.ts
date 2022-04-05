@@ -11,8 +11,7 @@ export class AuthService {
    
   estado?: boolean;
    
-  //private URL = 'http://172.17.0.4:3000'
-  //private URL = 'http://localhost:3000'
+ 
   private URL = environment.apiURL
 
   constructor(private http: HttpClient,
@@ -39,7 +38,7 @@ export class AuthService {
       err => {
           if(err.status == 200){
           this.estado = true
-          console.log(this.estado)
+          console.log('El estado es :'+this.estado)
           }else{
           this.estado = false
           console.log('el estado es :'+this.estado)

@@ -24,66 +24,22 @@ exports.validarusuario = async (req, res) => {
     const passHash = await bcryptjs.hash(password, 8)
 
     //console.log(req.body)
-    console.log(username,password,email,role_id)
+    console.log(username, password, email, role_id)
     if (!username || !password || !email || !role_id) {
-       /* res.render('register', {
-            alert: true,
-            alertTitle: "Advertencia",
-            alerstMessage: "Uno o mas campos estan sin completar",
-            alertIcon: 'info',
-            showConfirmButton: true,
-            timer: false,
-            ruta: '/register'
-        })
-        */
-        
         return res.status(501).send('Falta información');
     }
 
-
     else {
-
         User.finduser(username, email, function (data) {
-
             if (data != undefined) {
-                //res.send('usuario ya existe')
-                // res.redirect('/register')
                 return res.status(501).send('Usuario y/o email ya existente');
-                /*
-                res.render('register', {
-                    alert: true,
-                    alertTitle: "Error",
-                    alerstMessage: "Usuario y/o email ya existe",
-                    alertIcon: 'error',
-                    showConfirmButton: true,
-                    timer: false,
-                    ruta: '/register'
-                })
-                */
             }
             else {
                 User.register(username, email, passHash, role_id, function (resp) {
-                    //res.send(resp)
-                    return res.status(200).send('Usuario ingresado'+role_id);
-                   /* res.render('register', {
-                        alert: true,
-                        alertTitle: "Registro de usuario",
-                        alerstMessage: "Registro de usuario exitoso",
-                        alertIcon: 'success',
-                        showConfirmButton: false,
-                        timer: 1000,
-                        ruta: '/'
-                    })
-                    */
-                    //res.redirect('/')
+                    return res.status(200).send('Usuario ingresado' + role_id);
                 })
-
-
             }
-
-
         })
-
     }
 }
 
@@ -108,6 +64,9 @@ exports.login = async (req, res) => {
             })
         }
         else {
+         
+        
+
             conexion.query('select * from users where username=?',
                 [username],
                 async (error, results) => {
@@ -128,7 +87,7 @@ exports.login = async (req, res) => {
                         //res.send('usuario correcto')
                         const id = results[0].id
                         const role_id = results[0].role_id
-                        const token = jwt.sign({ id: id , idr:role_id }, process.env.JWT_SECRETO, {
+                        const token = jwt.sign({ id: id, idr: role_id }, process.env.JWT_SECRETO, {
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
                         //console.log(token) 
@@ -147,24 +106,7 @@ exports.login = async (req, res) => {
                         //console.log(results[0].role_id)
                         //console.log(req.session.role)
                         //res.cookie('jwt',token,cookieOptions)
-                        return res.status(200).json({ token, cookieOptions, roleHash,rid_ss0 })
-
-                        /*        s
-                        res.render('login', {
-                            alert: true,
-                            alertTitle: "Conexion Exitosa",
-                            alertMessage: "Login correcto!",
-                            alertIcon: 'success',
-                            showConfirmButton: false,
-                            timer: 800,
-                            ruta: '/'
-                        })
-                        */
-                        //return res.status(200).json({token,cookieOptions,role})
-
-
-                        //res.redirect('/')
-
+                        return res.status(200).json({ token, cookieOptions, roleHash, rid_ss0 })
 
                     }
 
@@ -181,30 +123,23 @@ exports.login = async (req, res) => {
 
 
 exports.isAuthenticated = async (req, res, next) => {
-    // if(req.cookies.jwt)
-    //console.log(req.headers.authorization)
-     //console.log(req.headers)
+
     const rolekey = req.headers.rolekey
-    //console.log(req.headers.rolekey)
-    //console.log(req.headers.RoleKey)
+
     if (req.headers.authorization) {
         try {
-            //const decodificada = await jwt.verify(req.cookies.jwt, process.env.JWT_SECRETO)
+
             const decodificada = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO)
-            //console.log(decodificada)
+
             const exp = decodificada.exp
-            //console.log(exp)
-            //console.log('el id es:'+decodificada.id+'ID')
+
             conexion.query('select * from users where id=?',
                 [decodificada.id],
                 async (error, results) => {
                     if (!results) {
 
-
-
-
                         return res.status(401).send('Not authorized, token not found!');
-                        //return next()
+
 
                     }
 
@@ -216,21 +151,7 @@ exports.isAuthenticated = async (req, res, next) => {
 
                     }
 
-                    /*    
-                    { 
-                         if(Date.now() <= exp*1000){
 
-                            req.username = results[0]
-                            req.rolekey =  rolekey
-                            ///console.log(req.username)
-                            return next()
-
-                         }
-                         console.log('token expirado' )
-                         return res.status(401).send('Not authorized, token is expired');  
-                         
-                    }
-                    */
                 })
         } catch (error) {
             //console.log('Token expiratdo ==>' + error)
@@ -291,14 +212,14 @@ exports.isAuthorizedAdmin = async (req, res, next) => {
 
 
 exports.isAdmin = async (req, res, next) => {
-    const rolekey = req.rolekey 
+    const rolekey = req.rolekey
     try {
         if (await bcryptjs.compare('admin', rolekey.substr(7))) {
-            
-            res.status(200).send('Autorized')       
+
+            res.status(200).send('Autorized')
         }
         else {
-            res.status(401).json({ error: 'Unauthorized' })    
+            res.status(401).json({ error: 'Unauthorized' })
         }
     } catch (error) {
         console.log(error)

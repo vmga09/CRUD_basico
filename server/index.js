@@ -1,14 +1,9 @@
-//require('./config/conexion');
 //Llama librería express
 const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
-dotenv.config({path:'./env/.env'});
+dotenv.config({ path: './env/.env' });
 const session = require('express-session')
-//const flash = require('connect-flash')
-
-
-
 
 //Define constante de puerto
 const port = (process.env.port || 3000);
@@ -28,16 +23,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     //cookie: { secure: true }
-   cookie: {maxAge: 24*60*60*1000,
-            httpOnly: false}
-  }))
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: false
+    }
+}))
 
-//app.use(flash());
-
-//app.use(function(req, res, next){
-//    res.locals.message = req.flash();
-//    next();
-//});
 
 
 //Admite formato json para body
@@ -46,9 +37,9 @@ app.use(cookieParser())
 
 app.use(cors(corsOptions));
 
-app.set('view engine','ejs')
+app.set('view engine', 'ejs')
 app.use(express.static('public'))
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 
 
 
@@ -56,20 +47,20 @@ app.use(express.urlencoded({extended:true}))
 app.set('port', port)
 
 //Llama a rutas
-require('./routes/personal.routes')(app);
+//require('./routes/personal.routes')(app);
 //require('./routes/auth.routes')(router);
-app.use('/',require('./routes/auth.routes'))
+app.use('/', require('./routes/auth.routes'))
 
 
 
 
 
 //Iniciar servicio API por el puerto 3000
-app.listen(app.get('port'),(error)=>{
-    if(error){
-        console.log('Error al iniciar el servidor '+error)
+app.listen(app.get('port'), (error) => {
+    if (error) {
+        console.log('Error al iniciar el servidor ' + error)
     }
-    else{
-        console.log('Servidor iniciado correctamente'+port)
+    else {
+        console.log('Servidor iniciado correctamente' + port)
     }
 })
