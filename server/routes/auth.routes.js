@@ -2,20 +2,24 @@ const authController = require('../controllers/auth.controllers');
 const express = require('express');
 const router = express.Router();
 const middleware = require('../middleware/auth.middleware')
-//const { body } = require('express-validator');
-//const User = require('../models/auth.modeles');
-//const res = require('express/lib/response');
 const personalcontroller = require('../controllers/personal.controllers ')
 
-router.post('/finduser', authController.isAuthenticated, middleware.isAuthorizedAdmin, authController.validarusuario)
+router.post('/finduser', middleware.isAuthenticated, middleware.isAuthorizedAdmin, authController.validarusuario)
 router.post('/login', authController.login)
 router.get('/logout', authController.logout)
-router.get('/mostrarpersonal', authController.isAuthenticated, personalcontroller.listarPersonal)
-router.post('/agregarpersonal', authController.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.agregarPersonal)
-router.get('/eliminarpersonal/:id', authController.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.eliminarPersonalId)
-router.get('/listarPersonalId/:id', authController.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.listarPersonalId)
-router.put('/modificarpersonal/:id', authController.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.modificarPersonal)
-router.get('/isadmin', authController.isAuthenticated, middleware.isAdmin)
+router.get('/mostrarpersonal', middleware.isAuthenticated, personalcontroller.listarPersonal)
+router.post('/agregarpersonal', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.agregarPersonal)
+router.get('/eliminarpersonal/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.eliminarPersonalId)
+router.get('/listarPersonalId/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.listarPersonalId)
+router.put('/modificarpersonal/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.modificarPersonal)
+router.get('/isadmin', middleware.isAuthenticated, middleware.isAdmin)
+
+//Rutas TEST 
+
+router.post('/testadmin',middleware.isRoleAdmin)
+router.post('/testeditor',middleware.isRoleEditor)
+router.post('/testaoe',middleware.isRoleEditororAdmin)
+
 
 module.exports = router
 

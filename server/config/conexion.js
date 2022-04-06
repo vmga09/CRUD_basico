@@ -26,8 +26,10 @@ const mysql = require('mysql');
     user     : process.env.DB_USER,
     password : process.env.DB_PASS,
     port: process.env.DB_PORT,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_DATABASE
   });
+
+
 
   conexion.connect((err)=>{
       if(err){

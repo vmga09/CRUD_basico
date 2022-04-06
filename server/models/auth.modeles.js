@@ -28,9 +28,21 @@ module.exports = {
         )
     },
 
-    validarusuaqrio: function (username,callback){
-        conexion.query('select username,email from users where username=?',
-            [username],
+    validarUsuarioId: function (id,callback){
+        conexion.query('select * from users where id=?',
+            [id],
+            (err, rows, fields) => {
+                if (err) throw err;
+                else {
+                    return callback(rows[0]);
+                }
+            }
+        )
+    },
+
+    validarSesion: function (session_id,callback){
+        conexion.query('select data from sessions where session_id=?',
+            [session_id],
             (err, rows, fields) => {
                 if (err) throw err;
                 else {
@@ -39,6 +51,4 @@ module.exports = {
             }
         )
     }
-
-
 }

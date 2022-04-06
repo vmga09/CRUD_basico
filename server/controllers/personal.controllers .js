@@ -38,17 +38,6 @@ module.exports = {
 
                myModel.agregarPersonal(nombre, cargo, correo, function (data) {                 
                   return res.status(200).send('Personal ingresado exitosamente');
-                  /*
-                  res.render('index', {
-                     alert: true,
-                     alertTitle: "Registro exitoso",
-                     alertMessage: "Personal registrado exitosamente",
-                     alertIcon: 'success',
-                     showConfirmButton: false,
-                     timer: 1000,
-                     ruta: '/'
-                  })
-                   */
                })
 
             }
@@ -63,7 +52,7 @@ module.exports = {
       var id = req.params.id;
       myModel.eliminarPersonalId(id, function (data) {
          res.send(data)
-         //res.redirect('/')
+
       })
    },
 
