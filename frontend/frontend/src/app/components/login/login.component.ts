@@ -47,14 +47,16 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('token',res.token);
         localStorage.setItem('role',res.roleHash);
+        localStorage.setItem('rid_ss0',res.rid_ss0);
+        console.log(res.token)
  
-        this.http.get<any>(this.URL + '/isAdmin')
+        this.http.get<any>(this.URL + '/iseditoroadmin')
         .subscribe(
           res => {
-            console.log(res.status);
+            console.log('El resultado es'+res.status);
           },
           err => {
-              if(err.status == 200){
+              if(err.status === 200){
                 this.router.navigate(['/listar']);
               
               }else{

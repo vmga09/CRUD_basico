@@ -14,6 +14,7 @@ export class ListarpersonalComponent implements OnInit {
 
   personals:any = [];
   estado?:boolean;
+  estado2?:boolean;
   //private URL = 'http://localhost:3000'
   private URL = environment.apiURL
   
@@ -32,7 +33,8 @@ export class ListarpersonalComponent implements OnInit {
     )
     
    
-    this.http.get<any>(this.URL + '/isAdmin')
+    //this.http.get<any>(this.URL + '/isAdmin')
+    this.http.get<any>(this.URL + '/iseditoroadmin')
     .subscribe(
       res => {
         console.log(res.status);
@@ -43,6 +45,23 @@ export class ListarpersonalComponent implements OnInit {
           console.log(this.estado)
           }else{
           this.estado = false
+          console.log(this.estado)
+          }
+      }
+      
+      );
+
+      this.http.get<any>(this.URL + '/isAdmin')
+    .subscribe(
+      res => {
+        console.log(res.status);
+      },
+      err => {
+          if(err.status == 200){
+          this.estado2 = true
+          console.log(this.estado)
+          }else{
+          this.estado2 = false
           console.log(this.estado)
           }
       }

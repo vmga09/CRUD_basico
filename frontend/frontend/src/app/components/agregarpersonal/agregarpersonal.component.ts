@@ -14,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
 export class AgregarpersonalComponent implements OnInit {
   //personalForm:  FormGroup;
   private URL = environment.apiURL
-
+  estado?:boolean;
   personal = {
     id: '',
     nombre: '',
@@ -29,7 +29,7 @@ export class AgregarpersonalComponent implements OnInit {
      public authService: AuthService,
      private http: HttpClient) { }
 
-  ngOnInit(): void {
+  ngOnInit()  {
 
     this.http.get<any>(this.URL + '/isAdmin')
       .subscribe(
@@ -38,8 +38,10 @@ export class AgregarpersonalComponent implements OnInit {
         },
         err => {
           if (err.status !== 200) {
+            this.estado = false
             this.router.navigate(['/userview'])
           }
+          this.estado = true
         }
       );
   }

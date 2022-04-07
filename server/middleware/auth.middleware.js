@@ -61,7 +61,7 @@ exports.isAuthorizedAdmin = async (req, res, next) => {
 }
 
 exports.isRoleAdmin = async (req, res, next) => {
-    const session_id = req.headers.session_id
+    const session_id = req.headers.rid_ss0.substr(7)
     try {
         models.validarSesion(session_id,function(data) {
             if (!data) {
@@ -87,7 +87,7 @@ exports.isRoleAdmin = async (req, res, next) => {
 }
 
 exports.isRoleEditor = async (req, res, next) => {
-    const session_id = req.headers.session_id
+    const session_id = req.headers.rid_ss0.substr(7)
     try {
         models.validarSesion(session_id,function(data) {
             if (!data) {
@@ -114,7 +114,7 @@ exports.isRoleEditor = async (req, res, next) => {
 
 
 exports.isRoleEditororAdmin = async (req, res, next) => {
-    const session_id = req.headers.session_id
+    const session_id = req.headers.rid_ss0.substr(7)
     try {
         models.validarSesion(session_id,function(data) {
             if (!data) {

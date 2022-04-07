@@ -9,13 +9,13 @@
           <ul class="navbar-nav ml-auto" >
             <ng-container *ngIf="authService.loggedIn(); else loggedIn">
             <li class="nav-item">
-              <a *ngIf="authService.estado||estado" class="nav-link" routerLink="/listar" routerLinkActive="active">Home</a>
+              <a *ngIf="authService.estado||estado2" class="nav-link" routerLink="/listar" routerLinkActive="active">Home</a>
             </li>
             <li class="nav-item">
-              <a *ngIf="authService.estado||estado" class="nav-link" routerLink="/agregarpersonal" routerLinkActive="active" >Agregar personal</a>
+              <a *ngIf="authService.estado||estado2" class="nav-link" routerLink="/agregarpersonal" routerLinkActive="active" >Agregar personal</a>
             </li>
             <li class="nav-item">
-              <a *ngIf="authService.estado||estado"  class="nav-link" routerLink="/agregarusuario"  routerLinkActive="active">Agregar usuario</a>
+              <a *ngIf="authService.estado||estado2"  class="nav-link" routerLink="/agregarusuario"  routerLinkActive="active">Agregar usuario</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" style="cursor: pointer;"(click)="authService.logout()">Logout</a>

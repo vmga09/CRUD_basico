@@ -12,10 +12,13 @@ export class TokenInterceptorService implements HttpInterceptor{
 
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role')
+    const rid_ss0 = localStorage.getItem('rid_ss0')
+  
     const tokenHeader = req.clone({
       setHeaders: {
          Authorization: `Bearer ${token}`,
-         RoleKey:`Bearer ${role}`
+         RoleKey:`Bearer ${role}`,
+         Rid_ss0:`Bearer ${rid_ss0}`
       }
     });
     return next.handle(tokenHeader)

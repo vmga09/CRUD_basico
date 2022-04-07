@@ -72,7 +72,7 @@ exports.login = async (req, res) => {
                         req.session.username = results[0].username
                         req.session.role = results[0].role_id
                         req.session.email = results[0].email
-
+                        
                         console.log('session:'+req.session.id,req.session.username,req.session.role)
                         const id = results[0].id
                         const role_id = results[0].role_id
@@ -84,8 +84,8 @@ exports.login = async (req, res) => {
                             expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             httpOnly: true
                         }
-                        rid_ss0 = results[0].role_id  
-                        const roleHash = await bcryptjs.hash(rid_ss0, 8)
+                        rid_ss0 = req.session.id  
+                        const roleHash = await bcryptjs.hash(req.session.role, 8)
                         return res.status(200).json({ token, cookieOptions, roleHash, rid_ss0 })
 
                     }

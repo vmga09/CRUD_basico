@@ -9,16 +9,19 @@ router.post('/login', authController.login)
 router.get('/logout', authController.logout)
 router.get('/mostrarpersonal', middleware.isAuthenticated, personalcontroller.listarPersonal)
 router.post('/agregarpersonal', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.agregarPersonal)
-router.get('/eliminarpersonal/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.eliminarPersonalId)
+//router.get('/eliminarpersonal/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.eliminarPersonalId)
+router.get('/eliminarpersonal/:id', middleware.isAuthenticated, middleware.isRoleEditororAdmin, personalcontroller.eliminarPersonalId)
 router.get('/listarPersonalId/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.listarPersonalId)
 router.put('/modificarpersonal/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.modificarPersonal)
-router.get('/isadmin', middleware.isAuthenticated, middleware.isAdmin)
+router.get('/isadmin', middleware.isAuthenticated, middleware.isRoleAdmin)
+router.get('/iseditoroadmin', middleware.isAuthenticated, middleware.isRoleEditororAdmin)
+//router.get('/isadmin', middleware.isAuthenticated, middleware.isAdmin)
 
 //Rutas TEST 
 
-router.post('/testadmin',middleware.isRoleAdmin)
-router.post('/testeditor',middleware.isRoleEditor)
-router.post('/testaoe',middleware.isRoleEditororAdmin)
+//router.post('/testadmin',middleware.isRoleAdmin)
+//router.post('/testeditor',middleware.isRoleEditor)
+//router.post('/testaoe',middleware.isRoleEditororAdmin)
 
 
 module.exports = router
