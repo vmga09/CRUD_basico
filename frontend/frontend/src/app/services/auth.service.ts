@@ -53,11 +53,27 @@ export class AuthService {
   
 
   logout(){
-    localStorage.removeItem('token')
-    localStorage.removeItem('role')
-    localStorage.removeItem('rid_ss0')
-    this.router.navigate(['/login'])
+    
+    this.http.get<any>(this.URL + '/logout')
+    
+    .subscribe(
+      res => {
+       // localStorage.removeItem('rid_ss0')
+        console.log(res.status);
+      },
+      err => {
+          
+      }
+      
+      );
 
+      
+
+
+      localStorage.removeItem('token')
+      localStorage.removeItem('role')
+      localStorage.removeItem('rid_ss0')
+       return this.router.navigate(['/login'])
 
   }
 }

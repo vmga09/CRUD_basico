@@ -8,6 +8,7 @@ const bcryptjs = require('bcryptjs');
 
 
 
+
 exports.validarusuario = async (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
@@ -72,11 +73,12 @@ exports.login = async (req, res) => {
                         req.session.username = results[0].username
                         req.session.role = results[0].role_id
                         req.session.email = results[0].email
+                        rid_ss0 = req.session.id 
                         
                         console.log('session:'+req.session.id,req.session.username,req.session.role)
                         const id = results[0].id
                         const role_id = results[0].role_id
-                        const token = jwt.sign({ id: id, idr: role_id }, process.env.JWT_SECRETO, {
+                        const token = jwt.sign({ id: id, idr:rid_ss0 }, process.env.JWT_SECRETO, {
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
 
@@ -84,7 +86,7 @@ exports.login = async (req, res) => {
                             expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             httpOnly: true
                         }
-                        rid_ss0 = req.session.id  
+                         
                         const roleHash = await bcryptjs.hash(req.session.role, 8)
                         return res.status(200).json({ token, cookieOptions, roleHash, rid_ss0 })
 
@@ -104,8 +106,9 @@ exports.login = async (req, res) => {
 
 
 exports.logout = async (req, res) => {
-    sessionStore.close();
-    res.clearCookie('jwt')
-    res.clearCookie('connect.sid')
-
+    console.log('session a eliminar: '+req.headers.rid_ss0.substr(7))
+    const session_id = req.headers.rid_ss0.substr(7)
+    await User.eliminarSession(session_id,function(data) {
+        return res.status(200).send('Session Terminada');
+    })
 }

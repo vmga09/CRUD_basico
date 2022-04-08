@@ -60,6 +60,15 @@ exports.isAuthorizedAdmin = async (req, res, next) => {
     }
 }
 
+
+
+
+
+
+
+
+//Middleware validar role desde el frontEnd
+
 exports.isRoleAdmin = async (req, res, next) => {
     const session_id = req.headers.rid_ss0.substr(7)
     try {
@@ -72,7 +81,6 @@ exports.isRoleAdmin = async (req, res, next) => {
                 let role_id = JSON.parse(data.data).role
                   if(role_id === "admin"){
                     res.status(200).send('Is admin')  
-                    return next()
                   }
                   else{
                     return res.status(401).send('Not authorized');  
@@ -98,7 +106,32 @@ exports.isRoleEditor = async (req, res, next) => {
                 let role_id = JSON.parse(data.data).role
                   if(role_id === "editor"){
                     res.status(200).send('Is Editor')  
-                    return next()
+
+                  }
+                  else{
+                    return res.status(401).send('Not authorized');  
+                  }                 
+            }
+            })
+            
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({ error: 'Unauthorized' })
+    }
+}
+
+exports.isRoleEditorAdmin = async (req, res, next) => {
+    const session_id = req.headers.rid_ss0.substr(7)
+    try {
+        models.validarSesion(session_id,function(data) {
+            if (!data) {
+                return res.status(401).send('Not authorized, session id not found');
+            }
+            else
+            {
+                let role_id = JSON.parse(data.data).role
+                  if(role_id === "editor" || role_id === "admin"){
+                    res.status(200).send('It is authorized')  
                   }
                   else{
                     return res.status(401).send('Not authorized');  
@@ -113,7 +146,11 @@ exports.isRoleEditor = async (req, res, next) => {
 }
 
 
-exports.isRoleEditororAdmin = async (req, res, next) => {
+
+//Middleware Admin o Editor Role para next() 
+
+
+exports.isAuthRoleEditorAdmin = async (req, res, next) => {
     const session_id = req.headers.rid_ss0.substr(7)
     try {
         models.validarSesion(session_id,function(data) {
@@ -123,8 +160,32 @@ exports.isRoleEditororAdmin = async (req, res, next) => {
             else
             {
                 let role_id = JSON.parse(data.data).role
-                  if(role_id === "editor" || role_id === "admin"){
-                    res.status(200).send('It is authorized')  
+                  if(role_id === "editor" || role_id === "admin"){  
+                    return next()
+                  }
+                  else{
+                    return res.status(401).send('Not authorized');  
+                  }                 
+            }
+            })
+            
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({ error: 'Unauthorized' })
+    }
+}
+
+exports.isAuthRoleAdmin = async (req, res, next) => {
+    const session_id = req.headers.rid_ss0.substr(7)
+    try {
+        models.validarSesion(session_id,function(data) {
+            if (!data) {
+                return res.status(401).send('Not authorized, session id not found');
+            }
+            else
+            {
+                let role_id = JSON.parse(data.data).role
+                  if(role_id === "admin"){  
                     return next()
                   }
                   else{

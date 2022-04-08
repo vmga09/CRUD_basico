@@ -50,5 +50,15 @@ module.exports = {
                 }
             }
         )
-    }
+    },
+
+    eliminarSession: function (session_id, callback) {
+        let sql = 'Delete from sessions where session_id = ?';
+        conexion.query(sql, session_id, function (err, rows, fields) {
+            if (err) throw err;
+            else {
+                return callback(rows[0]);
+            }
+        })
+    },
 }

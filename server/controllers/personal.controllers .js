@@ -63,7 +63,7 @@ module.exports = {
       var correo = req.body.correo;
 
       if (!nombre || !cargo || !correo) {
-         res.render('agregarpersonal', {
+        /* res.render('agregarpersonal', {
             alert: true,
             alertTitle: "Advertencia",
             alertMessage: "Uno o mas datos estan sin completar",
@@ -71,13 +71,13 @@ module.exports = {
             showConfirmButton: true,
             timer: false,
             ruta: '/'
-         })
+         }) */
       }
 
       else {
          myModel.modificarPersonal(id, nombre, cargo, correo, function (data) {
-
-            res.redirect('/')
+            //res.send(data)
+            //res.redirect('/')
 
          })
       }

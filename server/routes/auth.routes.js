@@ -4,17 +4,18 @@ const router = express.Router();
 const middleware = require('../middleware/auth.middleware')
 const personalcontroller = require('../controllers/personal.controllers ')
 
-router.post('/finduser', middleware.isAuthenticated, middleware.isAuthorizedAdmin, authController.validarusuario)
+router.post('/finduser', middleware.isAuthenticated, middleware.isAuthRoleAdmin, authController.validarusuario)
 router.post('/login', authController.login)
 router.get('/logout', authController.logout)
 router.get('/mostrarpersonal', middleware.isAuthenticated, personalcontroller.listarPersonal)
-router.post('/agregarpersonal', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.agregarPersonal)
+router.post('/agregarpersonal', middleware.isAuthenticated, middleware.isAuthRoleAdmin, personalcontroller.agregarPersonal)
 //router.get('/eliminarpersonal/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.eliminarPersonalId)
-router.get('/eliminarpersonal/:id', middleware.isAuthenticated, middleware.isRoleEditororAdmin, personalcontroller.eliminarPersonalId)
-router.get('/listarPersonalId/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.listarPersonalId)
-router.put('/modificarpersonal/:id', middleware.isAuthenticated, middleware.isAuthorizedAdmin, personalcontroller.modificarPersonal)
+router.get('/eliminarpersonal/:id', middleware.isAuthenticated, middleware.isAuthRoleEditorAdmin, personalcontroller.eliminarPersonalId)
+router.get('/listarPersonalId/:id', middleware.isAuthenticated,middleware.isAuthRoleEditorAdmin, personalcontroller.listarPersonalId)
+router.put('/modificarpersonal/:id', middleware.isAuthenticated, middleware.isAuthRoleEditorAdmin, personalcontroller.modificarPersonal)
 router.get('/isadmin', middleware.isAuthenticated, middleware.isRoleAdmin)
-router.get('/iseditoroadmin', middleware.isAuthenticated, middleware.isRoleEditororAdmin)
+router.get('/iseditoroadmin', middleware.isAuthenticated, middleware.isRoleEditorAdmin)
+
 //router.get('/isadmin', middleware.isAuthenticated, middleware.isAdmin)
 
 //Rutas TEST 
