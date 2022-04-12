@@ -15,26 +15,27 @@ const { options } = require('./routes/auth.routes');
 
 
 //Cors
-var corsOptions = { 
+var corsOptions = {
     origin: process.env.CORS_URL
 };
+
 
 //Express
 const app = express();
 
 // Session Express
 var sessionStore = new MySQLStore({
-    host     : process.env.DB_HOST,
-    user     : process.env.DB_USER,
-    password : process.env.DB_PASS,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     mysql_port: process.env.DB_PORT,
     database: process.env.DB_DATABASE,
-  }
+}
 );
 
 
 app.use(session({
-    
+
     secret: process.env.EXP_SESSION_SECRET,
     resave: false,
     saveUninitialized: false,

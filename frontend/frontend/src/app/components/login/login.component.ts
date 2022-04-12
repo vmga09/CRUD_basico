@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    localStorage.removeItem('rid_ss0')
+    //localStorage.removeItem('rid_ss0')
 
     
   }
@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit {
       res => {
 
         localStorage.setItem('token',res.token);
-        localStorage.setItem('role',res.roleHash);
-        localStorage.setItem('rid_ss0',res.rid_ss0);
+        //localStorage.setItem('role',res.roleHash);
+        //localStorage.setItem('rid_ss0',res.rid_ss0);
         console.log(res.token)
  
         this.http.get<any>(this.URL + '/iseditoroadmin')

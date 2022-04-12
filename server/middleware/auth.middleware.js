@@ -1,22 +1,22 @@
-const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const models = require('../models/auth.modeles');
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(process.env.EXP_SESSION_CRYPTO);
 
 
 
 exports.isAuthenticated = async (req, res, next) => {
-    const rolekey = req.headers.rolekey
     if (req.headers.authorization) {
         try {
-            const decodificada = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO)
-            const id = decodificada.id
-            models.validarUsuarioId(id, function (data) {
+            const session_id = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO).idr
+            const idr = cryptr.decrypt(session_id);
+            console.log('Session :'+idr)
+            models.validarSesion(idr, function (data) {
                 if (!data) {
                     return res.status(401).send('Not authorized, token not found!');
                 }
                 else {
-                    req.username = data.username
-                    req.rolekey = rolekey
+                    req.session_id = idr
                     return next()
                 }
             })
@@ -28,6 +28,8 @@ exports.isAuthenticated = async (req, res, next) => {
     }
 }
 
+
+/*
 exports.isAdmin = async (req, res, next) => {
     const rolekey = req.rolekey
     try {
@@ -61,7 +63,7 @@ exports.isAuthorizedAdmin = async (req, res, next) => {
 }
 
 
-
+*/
 
 
 
@@ -70,7 +72,8 @@ exports.isAuthorizedAdmin = async (req, res, next) => {
 //Middleware validar role desde el frontEnd
 
 exports.isRoleAdmin = async (req, res, next) => {
-    const session_id = req.headers.rid_ss0.substr(7)
+    //const session_id = req.headers.rid_ss0.substr(7)
+    const session_id = req.session_id
     try {
         models.validarSesion(session_id,function(data) {
             if (!data) {
@@ -95,7 +98,9 @@ exports.isRoleAdmin = async (req, res, next) => {
 }
 
 exports.isRoleEditor = async (req, res, next) => {
-    const session_id = req.headers.rid_ss0.substr(7)
+
+    //const session_id = req.headers.rid_ss0.substr(7)
+    const session_id = req.session_id
     try {
         models.validarSesion(session_id,function(data) {
             if (!data) {
@@ -121,7 +126,8 @@ exports.isRoleEditor = async (req, res, next) => {
 }
 
 exports.isRoleEditorAdmin = async (req, res, next) => {
-    const session_id = req.headers.rid_ss0.substr(7)
+    //const session_id = req.headers.rid_ss0.substr(7)
+    const session_id = req.session_id
     try {
         models.validarSesion(session_id,function(data) {
             if (!data) {
@@ -151,7 +157,8 @@ exports.isRoleEditorAdmin = async (req, res, next) => {
 
 
 exports.isAuthRoleEditorAdmin = async (req, res, next) => {
-    const session_id = req.headers.rid_ss0.substr(7)
+    //const session_id = req.headers.rid_ss0.substr(7)
+    const session_id = req.session_id
     try {
         models.validarSesion(session_id,function(data) {
             if (!data) {
@@ -176,7 +183,8 @@ exports.isAuthRoleEditorAdmin = async (req, res, next) => {
 }
 
 exports.isAuthRoleAdmin = async (req, res, next) => {
-    const session_id = req.headers.rid_ss0.substr(7)
+    //const session_id = req.headers.rid_ss0.substr(7)
+    const session_id = req.session_id
     try {
         models.validarSesion(session_id,function(data) {
             if (!data) {

@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const conexion = require('../config/conexion');
 const User = require('../models/auth.modeles');
 const bcryptjs = require('bcryptjs');
-
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(process.env.EXP_SESSION_CRYPTO);
 
 
 
@@ -46,26 +47,13 @@ exports.login = async (req, res) => {
         const password = req.body.password;
         console.log('usuario:' + username)
         if (!username || !password) {
-            res.render('login', {
-                alert: true,
-                alertTitle: "Advertencia",
-                alertMessage: "Ingrese un usuario y password",
-                alertIcon: 'info',
-                showConfirmButton: true,
-                timer: false,
-                ruta: 'inicio'
-            })
+            return res.status(401).send('Ingrese un usuario o password');           
         }
         else {
-         
-        
-
             conexion.query('select * from users where username=?',
                 [username],
                 async (error, results) => {
-
                     if (results.length == 0 || !(await bcryptjs.compare(password, results[0].password))) {
-
                         res.status(401).send('Not authorized');
                     }
                     else {
@@ -73,28 +61,22 @@ exports.login = async (req, res) => {
                         req.session.username = results[0].username
                         req.session.role = results[0].role_id
                         req.session.email = results[0].email
-                        rid_ss0 = req.session.id 
+                        //rid_ss0 = req.session.id 
                         
-                        console.log('session:'+req.session.id,req.session.username,req.session.role)
-                        const id = results[0].id
-                        const role_id = results[0].role_id
-                        const token = jwt.sign({ id: id, idr:rid_ss0 }, process.env.JWT_SECRETO, {
+                        //console.log('session:'+req.session.id,req.session.username,req.session.role)
+                        //const id = results[0].id
+                        const rid_ss0 = cryptr.encrypt(req.session.id);
+                        const token = jwt.sign({ idr:rid_ss0 }, process.env.JWT_SECRETO, {
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
-
                         const cookieOptions = {
                             expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
                             httpOnly: true
-                        }
-                         
-                        const roleHash = await bcryptjs.hash(req.session.role, 8)
-                        return res.status(200).json({ token, cookieOptions, roleHash, rid_ss0 })
-
+                        }                         
+                        //Envia token generado 
+                        return res.status(200).json({ token })
                     }
-
-
                 })
-
         }
     } catch (err) {
 
@@ -105,10 +87,13 @@ exports.login = async (req, res) => {
 
 
 
+// Función para eliminar la session 
 exports.logout = async (req, res) => {
-    console.log('session a eliminar: '+req.headers.rid_ss0.substr(7))
-    const session_id = req.headers.rid_ss0.substr(7)
-    await User.eliminarSession(session_id,function(data) {
+    //Obtiene del token la session id 
+    const session_id = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO).idr
+    const decryptedString = cryptr.decrypt(session_id); 
+    //Ejecuta la funcion eliminar session con el valor de la session capturada 
+    await User.eliminarSession(decryptedString,function(data) {
         return res.status(200).send('Session Terminada');
     })
 }
