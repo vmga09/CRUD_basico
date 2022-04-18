@@ -36,24 +36,25 @@
     <p>AGREGAR PERSONAL</p>
     <div class="row">
         <div class="col-sm-6">
-            <form  (ngSubmit)="agregarPersonal()">
-                <div class="mb-3">
+            <form  [formGroup]="personalForm"  (ngSubmit)="agregarPersonal()">
+                <div class="mb-3 form-group">
                     <label class="form-label">Nombre de Personal</label>
-                    <input  [(ngModel)]="personal.nombre" type="text" class="form-control " name="nombre" placeholder="Nombre" required>
-                    
+                    <input formControlName="nombre" [(ngModel)]="personal.nombre" type="text" class="form-control " name="nombre" placeholder="Nombre" required autofocus>
+                    <div class="text-danger" *ngIf="personalForm.get('nombre')?.hasError('required') && personalForm.get('nombre')?.touched"><span>El nombre del personal es <strong>obligatorio</strong></span></div>
                     
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Cargo de Personal</label>
-                    <input  [(ngModel)]="personal.cargo" type="text" class="form-control" name="cargo" placeholder="Cargo" required>
-                   
+                    <input formControlName="cargo" [(ngModel)]="personal.cargo" type="text" class="form-control" name="cargo" placeholder="Cargo" required autofocus>
+                    <div class="text-danger" *ngIf="personalForm.get('cargo')?.hasError('required') && personalForm.get('cargo')?.touched"><span>El cargo del personal es <strong>obligatorio</strong></span></div>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Correo de Personal</label>
-                    <input  [(ngModel)]="personal.correo" type="email" class="form-control" name="correo" placeholder="Correo" email="true" required>
-                   
+                    <input formControlName="correo" [(ngModel)]="personal.correo" type="email" class="form-control" name="correo" placeholder="Correo" email="true" required autofocus>
+                    <div class="text-danger" *ngIf="personalForm.get('correo')?.hasError('required') && personalForm.get('correo')?.touched"><span>El correo del personal es <strong>obligatorio</strong></span></div>
                 </div>
-                <button   type="submit"   (click)="agregarPersonal()" class="btn btn-primary" >Agregar</button>
+                <button   type="submit"   (click)="agregarPersonal()" class="btn btn-primary" [disabled]="personalForm.invalid">Agregar</button>
+                <button   style="margin-left: 8px;" type="submit"   routerLink="/listar" class="btn btn-danger" >Cancelar</button>
             </form>
         </div>
        

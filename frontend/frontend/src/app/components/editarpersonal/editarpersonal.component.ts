@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ListarpersonalService } from '../../services/listarpersonal.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -11,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class EditarpersonalComponent implements OnInit {
 
+  private URL = environment.apiURL
   personal:any = {
     id:'',
     nombre:'',
@@ -19,12 +22,40 @@ export class EditarpersonalComponent implements OnInit {
 
   };
 
-  constructor(private listarpersonalService:ListarpersonalService , private router:Router, private activeRoute:ActivatedRoute, public authService: AuthService) { 
+  constructor(private listarpersonalService:ListarpersonalService, 
+    private router:Router, 
+    private activeRoute:ActivatedRoute, 
+    public authService: AuthService,
+    private http:HttpClient) { 
 
 
    }
 
   ngOnInit(): void {
+
+    this.http.get<any>(this.URL + '/iseditoroadmin')
+      .subscribe(
+        res => {
+          console.log(res.status);
+        },
+        err => {
+          if (err.status === 403){
+            console.log('ERROR 403')
+            //this.estado = false
+            this.router.navigate(['/login'])
+
+          }else {
+            if (err.status === 401){
+              console.log('ERROR 401')
+              this.router.navigate(['/userview'])
+            }
+          }
+          //this.estado = true
+        }
+        
+      );
+
+
 
     const id_in = this.activeRoute.snapshot.paramMap.get('id');
     console.log('Id de entrada'+id_in);
@@ -53,11 +84,11 @@ export class EditarpersonalComponent implements OnInit {
 
         });
 
-    this.router.navigate(['/listar']);
+        this.router.navigate(['/listar']);
     //window.location.href = "/listar";
   
   }
 
-
+  
 
 }

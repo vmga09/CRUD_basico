@@ -7,7 +7,7 @@ const session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 
 //Define constante de puerto
-const port = (process.env.NODE_PORT || 3000);
+const port = (process.env.NODE_PORT || 4000);
 
 const cors = require('cors');
 const router = require('./routes/auth.routes');
@@ -30,6 +30,8 @@ var sessionStore = new MySQLStore({
     password: process.env.DB_PASS,
     mysql_port: process.env.DB_PORT,
     database: process.env.DB_DATABASE,
+    clearExpired: true,
+    checkExpirationInterval: 60000,
 }
 );
 
@@ -37,13 +39,14 @@ var sessionStore = new MySQLStore({
 app.use(session({
 
     secret: process.env.EXP_SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 60000,
         httpOnly: false
-    }
+    },
+    rolling: true
 }))
 
 

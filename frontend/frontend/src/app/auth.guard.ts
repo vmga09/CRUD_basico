@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
     //state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     //return true;
       if (this.authService.loggedIn()){
-            console.log('Primero')
           if(this.authService.isadmin()) {
             console.log('EXITO')
             return true;

@@ -35,25 +35,29 @@
     <p>AGREGAR USUARIO</p>
     <div class="row">
         <div class="col-sm-6">
-            <form  (ngSubmit)="agregarUsuario()">
-                <div class="mb-3">
+            <form  [formGroup]="usuarioForm" (ngSubmit)="agregarUsuario()">
+                <div class="mb-3 form-group">
                     <label class="form-label">Nombre de Usuario</label>
-                    <input  [(ngModel)]="usuario.username" type="text" class="form-control " name="username" placeholder="Username" required>  
+                    <input formControlName="username" [(ngModel)]="usuario.username" type="text" class="form-control " name="username" placeholder="Username" required autofocus>
+                    <div class="text-danger" *ngIf="usuarioForm.get('username')?.hasError('required') && usuarioForm.get('username')?.touched"><span>El nombre del usuario es <strong>obligatorio</strong></span></div>  
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Correo de Usuario</label>
-                    <input  [(ngModel)]="usuario.email" type="email" class="form-control" name="correo" placeholder="Correo" email="true" required>
-                   
+                    <input  formControlName="email" [(ngModel)]="usuario.email" type="email" class="form-control" name="correo" placeholder="Correo" email="true" required autofocus>
+                    <div class="text-danger" *ngIf="usuarioForm.get('email')?.hasError('required') && usuarioForm.get('email')?.touched"><span>El email del usuario es <strong>obligatorio</strong></span></div>  
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Password</label>
-                    <input  [(ngModel)]="usuario.password" type="password" class="form-control" name="password" placeholder="Password" required>
+                    <input  formControlName="password" [(ngModel)]="usuario.password" type="password" class="form-control" name="password" placeholder="Password" required autofocus>
+                    <div class="text-danger" *ngIf="usuarioForm.get('password')?.hasError('required') && usuarioForm.get('password')?.touched"><span>El password del usuario es <strong>obligatorio</strong></span></div>  
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                     <label class="form-label">Rol Id Usuario</label>
-                    <input  [(ngModel)]="usuario.role_id" type="text" class="form-control" name="role_id" placeholder="Role" required>
+                    <input formControlName="role_id" [(ngModel)]="usuario.role_id" type="text" class="form-control" name="role_id" placeholder="Role" required autofocus>
+                    <div class="text-danger" *ngIf="usuarioForm.get('role_id')?.hasError('required') && usuarioForm.get('role_id')?.touched"><span>El rol del usuario es <strong>obligatorio</strong></span></div>  
                 </div>
-                <button   type="submit"   (click)="agregarUsuario()" class="btn btn-primary" >Agregar</button>
+                <button   type="submit"   (click)="agregarUsuario()" class="btn btn-primary" [disabled]="usuarioForm.invalid">Agregar</button>
+                <button   style="margin-left: 8px;" type="submit"   routerLink="/listar" class="btn btn-danger" >Cancelar</button>
             </form>
         </div>
     </div>

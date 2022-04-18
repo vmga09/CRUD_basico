@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./agregarpersonal.component.css']
 })
 export class AgregarpersonalComponent implements OnInit {
-  //personalForm:  FormGroup;
+  personalForm:  FormGroup;
   private URL = environment.apiURL
   estado?:boolean;
   personal = {
@@ -27,7 +27,17 @@ export class AgregarpersonalComponent implements OnInit {
   constructor(private listarpersonalService: ListarpersonalService,
      private router: Router,
      public authService: AuthService,
-     private http: HttpClient) { }
+     private http: HttpClient,
+     private fb: FormBuilder) {
+
+      this.personalForm = this.fb.group({
+        nombre: ['',Validators.required],
+        cargo: ['',Validators.required],
+        correo: ['',Validators.required]  
+      });
+
+
+      }
 
   ngOnInit()  {
 
@@ -37,9 +47,16 @@ export class AgregarpersonalComponent implements OnInit {
           console.log(res.status);
         },
         err => {
-          if (err.status !== 200) {
+          if (err.status === 403){
+            console.log('ERROR 403')
             this.estado = false
-            this.router.navigate(['/userview'])
+            this.router.navigate(['/login'])
+
+          }else {
+            if (err.status === 401){
+              console.log('ERROR 401')
+              this.router.navigate(['/userview'])
+            }
           }
           this.estado = true
         }
@@ -55,5 +72,7 @@ export class AgregarpersonalComponent implements OnInit {
         err => console.log(err)
       )
     this.router.navigate(['/listar'])
+    //window.location.reload()
+    //window.location.href = "/listar"
   }
 }

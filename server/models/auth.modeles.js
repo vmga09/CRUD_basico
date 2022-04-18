@@ -8,7 +8,7 @@ module.exports = {
         conexion.query(sql, function (err, rows, fields) {
             if (err) throw err;
             else {
-                console.log(rows);
+                //console.log(rows);
                 return callback(rows);
             }
 
@@ -61,4 +61,16 @@ module.exports = {
             }
         })
     },
+
+    tiempoExtra: function (tiempoExtra,session_id,callback){
+        conexion.query('update sessions set expires = ? where session_id = ?',
+            [tiempoExtra,session_id],
+            (err, rows, fields) => {
+                if (err) throw err;
+                else {
+                    return callback(rows[0]);
+                }
+            }
+        )
+    }
 }

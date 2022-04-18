@@ -45,7 +45,7 @@ exports.login = async (req, res) => {
         res.clearCookie('connect.sid')
         const username = req.body.username;
         const password = req.body.password;
-        console.log('usuario:' + username)
+        //console.log('usuario:' + username)
         if (!username || !password) {
             return res.status(401).send('Ingrese un usuario o password');           
         }
@@ -90,10 +90,18 @@ exports.login = async (req, res) => {
 // Función para eliminar la session 
 exports.logout = async (req, res) => {
     //Obtiene del token la session id 
-    const session_id = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO).idr
-    const decryptedString = cryptr.decrypt(session_id); 
-    //Ejecuta la funcion eliminar session con el valor de la session capturada 
-    await User.eliminarSession(decryptedString,function(data) {
-        return res.status(200).send('Session Terminada');
+    try{
+        const session_id = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO).idr
+        const decryptedString = cryptr.decrypt(session_id);
+        await User.eliminarSession(decryptedString,function(data) {
+            return res.status(200).send('Session Terminada');
     })
+
+
+    }catch (err) {
+
+    }
+     
+    //Ejecuta la funcion eliminar session con el valor de la session capturada 
+   
 }

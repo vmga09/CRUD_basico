@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient  } from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   mensaje?:any;
   incorrecta?: boolean;
 
-  constructor(private authService: AuthService, private router:Router, private fb: FormBuilder ,private http: HttpClient) {
+  constructor(private authService: AuthService, private router:Router, private fb: FormBuilder ,private http: HttpClient,private toast: NgToastService) {
 
     this.usuarioForm = this.fb.group({
       username1: ['',Validators.required],
@@ -32,9 +33,8 @@ export class LoginComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    //localStorage.removeItem('rid_ss0')
-
-    
+  
+    localStorage.removeItem('token')
   }
 
   login(): void{
@@ -57,9 +57,24 @@ export class LoginComponent implements OnInit {
           },
           err => {
               if(err.status === 200){
+                this.toast.success({
+                  detail: "Bienvenido",
+                  summary: "Ud esta autorizado",
+                  duration: 3000,
+                  position: 'br'
+                 })
+      
                 this.router.navigate(['/listar']);
               
               }else{
+
+                this.toast.info({
+                  detail: "Bienvenido",
+                  summary: "Ud solo puede visualizar",
+                  duration: 3000,
+                  position: 'br'
+                 })
+
                 this.router.navigate(['/userview']);
             
               }
@@ -72,10 +87,18 @@ export class LoginComponent implements OnInit {
         console.log('error in subscribe err');
         console.log(serverLoginError.statusText, serverLoginError.status);
         if (serverLoginError.status != 200) {
-          console.log('password incorrecta')
+          
+          this.toast.error({
+            summary: "intente nuevamente",
+            detail: "Usuario o password incorrecto",
+            duration: 3000,
+            position: 'top'
+           })
+
+          //console.log('password incorrecta')
           //this.mensaje = ('uoyguygvu')
-          console.log(this.mensaje);
-          this.incorrecta = true;
+          //console.log(this.mensaje);
+          //this.incorrecta = true;
           
           ////this.usuarioForm.controls['password'].setErrors({invalid: true});
         }}

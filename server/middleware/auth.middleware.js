@@ -10,12 +10,13 @@ exports.isAuthenticated = async (req, res, next) => {
         try {
             const session_id = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO).idr
             const idr = cryptr.decrypt(session_id);
-            console.log('Session :'+idr)
             models.validarSesion(idr, function (data) {
                 if (!data) {
-                    return res.status(401).send('Not authorized, token not found!');
+                    return res.status(403).send('token not found');
                 }
                 else {
+                    const expiresNew = Math.round((Date.now() + process.env.TIMEPO_EXTRA * 60 * 1000) / 1000)
+                    models.tiempoExtra(expiresNew, idr, function (data) { })
                     req.session_id = idr
                     return next()
                 }
@@ -75,22 +76,21 @@ exports.isRoleAdmin = async (req, res, next) => {
     //const session_id = req.headers.rid_ss0.substr(7)
     const session_id = req.session_id
     try {
-        models.validarSesion(session_id,function(data) {
+        models.validarSesion(session_id, function (data) {
             if (!data) {
                 return res.status(401).send('Not authorized, session id not found');
             }
-            else
-            {
+            else {
                 let role_id = JSON.parse(data.data).role
-                  if(role_id === "admin"){
-                    res.status(200).send('Is admin')  
-                  }
-                  else{
-                    return res.status(401).send('Not authorized');  
-                  }                 
+                if (role_id === "admin") {
+                    res.status(200).send('Is admin')
+                }
+                else {
+                    return res.status(401).send('Not authorized');
+                }
             }
-            })
-            
+        })
+
     } catch (error) {
         console.log(error)
         res.status(401).json({ error: 'Unauthorized' })
@@ -102,23 +102,22 @@ exports.isRoleEditor = async (req, res, next) => {
     //const session_id = req.headers.rid_ss0.substr(7)
     const session_id = req.session_id
     try {
-        models.validarSesion(session_id,function(data) {
+        models.validarSesion(session_id, function (data) {
             if (!data) {
                 return res.status(401).send('Not authorized, session id not found');
             }
-            else
-            {
+            else {
                 let role_id = JSON.parse(data.data).role
-                  if(role_id === "editor"){
-                    res.status(200).send('Is Editor')  
+                if (role_id === "editor") {
+                    res.status(200).send('Is Editor')
 
-                  }
-                  else{
-                    return res.status(401).send('Not authorized');  
-                  }                 
+                }
+                else {
+                    return res.status(401).send('Not authorized');
+                }
             }
-            })
-            
+        })
+
     } catch (error) {
         console.log(error)
         res.status(401).json({ error: 'Unauthorized' })
@@ -129,22 +128,21 @@ exports.isRoleEditorAdmin = async (req, res, next) => {
     //const session_id = req.headers.rid_ss0.substr(7)
     const session_id = req.session_id
     try {
-        models.validarSesion(session_id,function(data) {
+        models.validarSesion(session_id, function (data) {
             if (!data) {
                 return res.status(401).send('Not authorized, session id not found');
             }
-            else
-            {
+            else {
                 let role_id = JSON.parse(data.data).role
-                  if(role_id === "editor" || role_id === "admin"){
-                    res.status(200).send('It is authorized')  
-                  }
-                  else{
-                    return res.status(401).send('Not authorized');  
-                  }                 
+                if (role_id === "editor" || role_id === "admin") {
+                    res.status(200).send('It is authorized')
+                }
+                else {
+                    return res.status(401).send('Not authorized');
+                }
             }
-            })
-            
+        })
+
     } catch (error) {
         console.log(error)
         res.status(401).json({ error: 'Unauthorized' })
@@ -160,22 +158,21 @@ exports.isAuthRoleEditorAdmin = async (req, res, next) => {
     //const session_id = req.headers.rid_ss0.substr(7)
     const session_id = req.session_id
     try {
-        models.validarSesion(session_id,function(data) {
+        models.validarSesion(session_id, function (data) {
             if (!data) {
                 return res.status(401).send('Not authorized, session id not found');
             }
-            else
-            {
+            else {
                 let role_id = JSON.parse(data.data).role
-                  if(role_id === "editor" || role_id === "admin"){  
+                if (role_id === "editor" || role_id === "admin") {
                     return next()
-                  }
-                  else{
-                    return res.status(401).send('Not authorized');  
-                  }                 
+                }
+                else {
+                    return res.status(401).send('Not authorized');
+                }
             }
-            })
-            
+        })
+
     } catch (error) {
         console.log(error)
         res.status(401).json({ error: 'Unauthorized' })
@@ -185,23 +182,23 @@ exports.isAuthRoleEditorAdmin = async (req, res, next) => {
 exports.isAuthRoleAdmin = async (req, res, next) => {
     //const session_id = req.headers.rid_ss0.substr(7)
     const session_id = req.session_id
+    //console.log(req.session.cookie.expires)
     try {
-        models.validarSesion(session_id,function(data) {
+        models.validarSesion(session_id, function (data) {
             if (!data) {
                 return res.status(401).send('Not authorized, session id not found');
             }
-            else
-            {
+            else {
                 let role_id = JSON.parse(data.data).role
-                  if(role_id === "admin"){  
+                if (role_id === "admin") {
                     return next()
-                  }
-                  else{
-                    return res.status(401).send('Not authorized');  
-                  }                 
+                }
+                else {
+                    return res.status(401).send('Not authorized');
+                }
             }
-            })
-            
+        })
+
     } catch (error) {
         console.log(error)
         res.status(401).json({ error: 'Unauthorized' })

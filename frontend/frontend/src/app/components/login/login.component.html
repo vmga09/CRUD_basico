@@ -1,10 +1,10 @@
-<div class="row">
-    <div class="col-md-3 mx-auto">
+<div class="rowcol-md-8 center">
+    <div class="col-md-3 mx-auto center">
         <div class="card">
             <div class="card-header">
                 Login
             </div>
-            <div class="card-body">
+            <div class="card-body " >
                 <form [formGroup] = "usuarioForm" (submit)="login()">
                     <div class="form-group">
                         <input formControlName="username1" [(ngModel)]="usuario.username" type="text" name="username" class="form-control form-control-lg" placeholder="Username" required autofocus>
@@ -20,9 +20,7 @@
                     <button class="btn btn-success btn-block" [disabled]="usuarioForm.invalid">
                         Ingresar
                     </button>
-                    <div *ngIf="incorrecta" class="alert alert-danger" >
-                        El usuario y/o password son incorrectos, intente nuevamente. 
-                    </div>
+                    
                 </form>
             </div>
         </div>

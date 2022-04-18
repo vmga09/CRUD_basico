@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { NgToastModule} from 'ng-angular-popup';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListarpersonalComponent } from './components/listarpersonal/listarpersonal.component';
@@ -13,6 +13,7 @@ import { AgregarusuariosComponent } from './components/agregarusuarios/agregarus
 import { AuthGuard}  from './auth.guard'
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { UserviewComponent } from './components/userview/userview.component';
+
 
 
 @NgModule({
@@ -30,7 +31,9 @@ import { UserviewComponent } from './components/userview/userview.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgToastModule
+   
   ],
   providers: [
     AuthGuard,

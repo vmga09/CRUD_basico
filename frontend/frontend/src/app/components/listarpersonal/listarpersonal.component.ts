@@ -21,6 +21,7 @@ export class ListarpersonalComponent implements OnInit {
   constructor( private listarpersonalService:ListarpersonalService , private Router:Router, private http: HttpClient, public authService: AuthService  ) { }
 
   ngOnInit()   {
+   
     this.listarpersonalService.listarpersonal()
     .subscribe(
       res => {
@@ -68,7 +69,7 @@ export class ListarpersonalComponent implements OnInit {
       
       );
      
-
+      //window.location.reload();
   }
 
   eliminarPersonal(id: any): void {
