@@ -61,11 +61,11 @@ exports.login = async (req, res) => {
                         req.session.username = results[0].username
                         req.session.role = results[0].role_id
                         req.session.email = results[0].email
-                        //rid_ss0 = req.session.id 
+                        rid_ss0 = req.session.id 
                         
                         //console.log('session:'+req.session.id,req.session.username,req.session.role)
                         //const id = results[0].id
-                        const rid_ss0 = cryptr.encrypt(req.session.id);
+                        //const rid_ss0 = cryptr.encrypt(req.session.id);
                         const token = jwt.sign({ idr:rid_ss0 }, process.env.JWT_SECRETO, {
                             expiresIn: process.env.JWT_TIEMPO_EXPIRA
                         })
@@ -92,7 +92,7 @@ exports.logout = async (req, res) => {
     //Obtiene del token la session id 
     try{
         const session_id = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO).idr
-        const decryptedString = cryptr.decrypt(session_id);
+        const decryptedString = session_id;
         await User.eliminarSession(decryptedString,function(data) {
             return res.status(200).send('Session Terminada');
     })

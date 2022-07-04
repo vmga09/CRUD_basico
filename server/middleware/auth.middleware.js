@@ -9,7 +9,8 @@ exports.isAuthenticated = async (req, res, next) => {
     if (req.headers.authorization) {
         try {
             const session_id = await jwt.verify(req.headers.authorization.substr(7), process.env.JWT_SECRETO).idr
-            const idr = cryptr.decrypt(session_id);
+            //const idr = cryptr.decrypt(session_id);
+            const idr = session_id;
             models.validarSesion(idr, function (data) {
                 if (!data) {
                     return res.status(403).send('token not found');

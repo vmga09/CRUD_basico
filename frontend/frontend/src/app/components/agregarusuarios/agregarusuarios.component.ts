@@ -57,7 +57,8 @@ export class AgregarusuariosComponent implements OnInit {
           }else {
             if (err.status === 401){
               console.log('ERROR 401')
-              this.router.navigate(['/userview'])
+              localStorage.removeItem('token')
+              this.router.navigate(['/login'])
             }
           }
           //this.estado = true

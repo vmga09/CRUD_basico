@@ -5,6 +5,7 @@ const middleware = require('../middleware/auth.middleware')
 const personalcontroller = require('../controllers/personal.controllers ')
 
 router.post('/finduser', middleware.isAuthenticated, middleware.isAuthRoleAdmin, authController.validarusuario)
+//router.post('/finduser', authController.validarusuario);
 router.post('/login', authController.login)
 router.get('/logout', authController.logout)
 router.get('/mostrarpersonal', middleware.isAuthenticated, personalcontroller.listarPersonal)
